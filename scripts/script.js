@@ -15,7 +15,7 @@ const tableRows = Array.from(document.querySelectorAll('table tr'));
 const itemHeight = 100;
 
 // Css classes for item backgrounds color
-const itemColors = ['gradient-primary', 'gradient-secondary'];
+const itemColors = ['gradient-primary', 'gradient-secondary', 'red-gradient'];
 
 // A variable to hold all the items
 let items = [];
@@ -34,7 +34,7 @@ let currentId = 0;
   items.forEach(ele => convertItemToNewNode(ele));
 })();
 
-function getAddString(name, description, extend = 0) {
+function getAddString(name, description, extend = 0, id) {
   /* 
     Calculating the height:
     The extend value should always add to it 1 number to we do not get
@@ -47,7 +47,7 @@ function getAddString(name, description, extend = 0) {
   const color = itemColors[Math.floor(Math.random() * itemColors.length)];
 
   // We return the value as a template string because there is many variables we need to use
-  let result = `<div class="item ${color}" style="height: ${height}px">
+  let result = `<div class="item ${color}" style="height: ${height}px" item-id="${id}">
         <div class="name">${name}</div>`;
 
   // The description is not required to add An item so we check before we add the item
@@ -99,10 +99,27 @@ let addItem = e => {
     addForm.name.value,
     addForm.description.value,
     addForm.day.value,
-    addForm.hour.value,
-    addForm.extend.value,
+    parseInt(addForm.hour.value),
+    parseInt(addForm.extend.value),
     currentId
   );
+
+  // Checking if there is no itme in that time
+  let availabe = true;
+  for (let i = 0; i < items.length; i++) {
+    let ele = items[i];
+    if (
+      ele.day === newItem.day &&
+      ele.hour <= newItem.hour &&
+      ele.hour + ele.extendTime >= newItem.hour
+    ) {
+      availabe = false;
+      alert('There is already a shift in that time');
+      break;
+    }
+  }
+
+  if (!availabe) return;
 
   // Adding the item to the array and saving it to the local storage
   items.push(newItem);
@@ -120,7 +137,8 @@ function convertItemToNewNode(newItem) {
   const newElement = getAddString(
     newItem.name,
     newItem.description,
-    parseInt(newItem.extendTime)
+    parseInt(newItem.extendTime),
+    newItem.id
   );
   // Getting the cell that will contain the new item
   const addCell = tableRows[newItem.hour].children[newItem.day];
@@ -144,7 +162,7 @@ document.getElementById('cancel-add').addEventListener('click', e => {
 });
 
 // Event for submiting the add form
-document.getElementById('add-item').addEventListener('click', addItem);
+addForm.addEventListener('submit', addItem);
 
 // Event for removing all shifts
 document.getElementById('removeItems').addEventListener('click', () => {

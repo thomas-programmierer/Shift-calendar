@@ -43,7 +43,8 @@ li {
   list-style: none;
 }
 
-button {
+button,
+input[type='submit'] {
   cursor: pointer;
 }
 
@@ -94,6 +95,11 @@ select {
 
 .gradient-secondary {
   background: var(--gradient-secondary);
+}
+
+/* Other gradient */
+.red-gradient {
+  background: linear-gradient(to right bottom, #ff3636, #ff2020);
 }
 
 button,
@@ -219,6 +225,7 @@ td,
 th {
   padding: 2rem 1rem;
   font-size: 1.2rem;
+  min-width: 160px;
 }
 
 td,
