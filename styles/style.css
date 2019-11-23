@@ -1,0 +1,269 @@
+/* 
+    - COLOR VALUES HENTED FROM: https://colorhunt.co/palette/147323
+*/
+:root {
+  --black-color: #2b4353;
+  --white-color: #fff;
+  --light-dark-white: rgb(240, 240, 240);
+  --dark-white: rgb(218, 218, 218);
+  --darker-white: rgb(195, 195, 195);
+  --primary-color: #004d61;
+  --secondary-color: #ff502f;
+  --low-opacity-primary-color: #004e6131;
+  --gradient-primary: linear-gradient(
+    to right bottom,
+    rgb(0, 94, 117),
+    rgb(0, 114, 143)
+  );
+  --gradient-secondary: linear-gradient(
+    to right bottom,
+    rgb(255, 80, 47),
+    rgb(211, 67, 38)
+  );
+}
+
+html {
+  font-size: 16px;
+}
+
+/* setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--black-color);
+  overflow-x: hidden;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+input[type='text'],
+input[type='number'],
+select {
+  padding: 1rem;
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+/* Ultilites */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay > form {
+  background: var(--white-color);
+  padding: 3rem;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 1rem;
+}
+
+.overlay form label {
+  font-size: 1.2rem;
+}
+
+.gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.gradient-secondary {
+  background: var(--gradient-secondary);
+}
+
+button,
+.btn {
+  border-radius: 5px;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.6rem;
+  background: none;
+  color: none;
+  outline: none;
+  border: none;
+  transition: opacity 0.2s ease-out;
+}
+
+button:hover,
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: var(--secondary-color);
+  color: var(--white-color);
+}
+
+.btn-white {
+  background: var(--darker-white);
+  color: var(--black-color);
+}
+
+/* Nav */
+nav {
+  background: var(--primary-color);
+  color: var(--white-color);
+  padding: 1.5rem 0;
+  position: static;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+nav * {
+  color: inherit;
+}
+
+nav > .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .brand {
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+/* table styling */
+table {
+  width: 100%;
+  height: 100%;
+}
+
+table,
+th,
+td {
+  border-collapse: collapse;
+  position: relative;
+}
+
+td:not(:first-child) {
+  border: 0.1px solid var(--low-opacity-primary-color);
+}
+
+td .item {
+  color: var(--white-color);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 5px;
+  position: absolute;
+  height: 90px;
+  width: 80%;
+  word-break: break-all;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow-y: auto;
+}
+
+/* width */
+td .item::-webkit-scrollbar {
+  width: 6px;
+  margin: 1rem 0;
+}
+
+/* Track */
+td .item::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+}
+
+/* Handle */
+td .item::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: var(--dark-white);
+}
+
+td .item .name {
+  font-size: 1.5rem;
+}
+
+td .item .description {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: var(--dark-white);
+}
+
+td,
+th {
+  padding: 2rem 1rem;
+  font-size: 1.2rem;
+}
+
+td,
+tr,
+th {
+  height: 100px;
+  max-height: 100px;
+}
+
+table thead th,
+table tbody td:first-child {
+  background: var(--secondary-color);
+  color: var(--white-color);
+}
+
+table thead th:first-child,
+table tbody td:first-child {
+  width: 5%;
+}
+
+table tbody tr {
+  transition: background 0.2s;
+}
+
+table tbody tr:nth-child(even) {
+  background: var(--dark-white);
+}
+
+table tbody tr:hover {
+  background: var(--light-dark-white);
+}
+
+table tbody tr:nth-child(even):hover {
+  background: var(--darker-white);
+}
+
+table tbody td:not(:first-child) {
+  cursor: pointer;
+}
+
+#cancel-add {
+  margin-left: 0.5rem;
+}
+
+/* add-menu */
+#add-menu {
+  display: none;
+}

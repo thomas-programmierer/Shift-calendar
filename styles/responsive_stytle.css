@@ -1,0 +1,44 @@
+/* setup */
+html {
+  font-size: 14px;
+}
+
+main {
+  overflow-x: auto;
+}
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 13px;
+  }
+
+  td,
+  th {
+    padding: 2rem 1rem;
+    font-size: 1rem;
+  }
+
+  .overlay > form {
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .overlay > form {
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 800px) {
+  .overlay > form {
+    max-width: initial;
+    overflow: visible;
+    width: fit-content;
+  }
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+}

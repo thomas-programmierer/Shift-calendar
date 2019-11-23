@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Calender</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="styles/responsive_stytle.css" media="(max-width:1600px)">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <a href="index.html" class="brand">Calender</a>
+        <ul>
+          <li><button id="add" class="btn-secondary">Add an item</button></li>
+          <li><button id="removeItems" class="btn-white">Remove all shifts</button></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <table>
+      <thead>
+        <th>&nbsp;</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>7:00AM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>8:00AM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>9:00AM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>10:00AM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>11:00AM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>12:00AM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <td>1:00PM</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+          <td>2:00PM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3:00PM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4:00PM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>5:00PM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>6:00PM</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="overlay" id="add-menu">
+      <form id="add-form">
+        <!-- The name of the task -->
+        <label for="name">Enter the name</label>
+        <input type="text" name="name" id="name" placeholder="name..." required>
+
+        <!-- The description of the task -->
+        <label for="description">Enter the description</label>
+        <input type="text" name="description" id="description" placeholder="description...">
+
+        <!-- The day of the task -->
+        <label for="day">Day</label>
+        <select name="day" id="day">
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+          <option value="7">Sunday</option>
+        </select>
+
+        <!-- The hour of the task -->
+        <label for="hour">Hour</label>
+        <select id="hour" name="hour">
+          <option value="1">7AM</option>
+          <option value="2">8AM</option>
+          <option value="3">9AM</option>
+          <option value="4">10AM</option>
+          <option value="5">11AM</option>
+          <option value="6">12AM</option>
+          <option value="7">1PM</option>
+          <option value="8">2PM</option>
+          <option value="9">3PM</option>
+          <option value="10">4PM</option>
+          <option value="11">5PM</option>
+          <option value="12">6PM</option>
+        </select>
+
+        <!-- The extend time -->
+        <label for="extend">Extend for extra hours:</label>
+        <input type="number" name="extend" id="extend" value="0">
+
+        <!-- Add and remove buttons -->
+        <button class="btn-secondary" id="add-item">Save</button>
+        <button class="btn-white" id="cancel-add">Close/ Cancel</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="scripts/script.js"></script>
+</body>
+
+</html>
