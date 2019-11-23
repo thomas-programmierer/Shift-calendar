@@ -167,7 +167,7 @@ function removeItem(e) {
 
   if (confirm('remove')) {
     let targetID = selectedItem.getAttribute('item-id');
-    let targetIndex;
+    let targetIndex = -1;
 
     for (let i = 0; i < items.length; i++) {
       if (items[i].id == targetID) {
@@ -176,7 +176,7 @@ function removeItem(e) {
       }
     }
 
-    if (targetIndex) {
+    if (targetIndex != -1) {
       items.splice(targetIndex, 1);
       saveToLocalStorage();
       selectedItem.remove();
