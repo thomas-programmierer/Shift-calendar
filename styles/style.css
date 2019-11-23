@@ -5,7 +5,7 @@
   --black-color: #2b4353;
   --white-color: #fff;
   --light-dark-white: rgb(240, 240, 240);
-  --dark-white: rgb(218, 218, 218);
+  --dark-white: rgb(240, 240, 240);
   --darker-white: rgb(195, 195, 195);
   --primary-color: #004d61;
   --secondary-color: #ff502f;
@@ -126,6 +126,11 @@ button:hover,
 }
 
 .btn-white {
+  background: var(--dark-white);
+  color: var(--black-color);
+}
+
+.btn-darker-white {
   background: var(--darker-white);
   color: var(--black-color);
 }
@@ -135,10 +140,8 @@ nav {
   background: var(--primary-color);
   color: var(--white-color);
   padding: 1.5rem 0;
-  position: static;
   top: 0;
   left: 0;
-  right: 0;
 }
 
 nav * {
@@ -219,6 +222,10 @@ td .item .description {
   font-size: 1rem;
   margin-top: 0.5rem;
   color: var(--dark-white);
+}
+
+td .item .endtime {
+  display: none;
 }
 
 td,

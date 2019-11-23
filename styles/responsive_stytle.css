@@ -21,6 +21,61 @@ main {
   .overlay > form {
     max-width: 800px;
   }
+
+  th,
+  thead {
+    display: none;
+  }
+
+  td {
+    display: inline-block;
+    width: 25%;
+    font-size: 1.25rem;
+  }
+
+  td:nth-of-type(1) {
+    font-size: 1.25rem;
+    text-align: center;
+    line-height: 75px;
+    padding: 0;
+  }
+
+  td .item .endtime {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  td:nth-of-type(2):before {
+    content: 'Monday';
+  }
+  td:nth-of-type(3):before {
+    content: 'Tuesday';
+  }
+  td:nth-of-type(4):before {
+    content: 'Wednesday';
+  }
+  td:nth-of-type(5):before {
+    content: 'Thursday';
+  }
+  td:nth-of-type(6):before {
+    content: 'Friday';
+  }
+  td:nth-of-type(7):before {
+    content: 'Saturday';
+  }
+  td:nth-of-type(8):before {
+    content: 'Sunday';
+  }
+
+  td::before {
+    display: block;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  td .item {
+    height: 92px !important;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -35,10 +90,42 @@ main {
     overflow: visible;
     width: fit-content;
   }
+
+  td {
+    display: inline-block;
+    width: 50%;
+  }
+
+  td:nth-of-type(1) {
+    font-size: 1.5rem;
+    text-align: center;
+    padding-top: 1rem;
+  }
 }
 
 @media (max-width: 600px) {
   html {
     font-size: 12px;
+  }
+
+  td {
+    display: inline-block;
+    width: 100%;
+  }
+
+  td:nth-of-type(1) {
+    font-size: 2rem;
+    text-align: center;
+    padding-top: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  nav ul {
+    margin-top: 1rem;
+  }
+
+  nav .container {
+    flex-direction: column;
   }
 }

@@ -40,7 +40,7 @@ let selectedItem;
   items.forEach(ele => convertItemToNewNode(ele));
 })();
 
-function getAddString(name, description, extend = 0, id) {
+function getAddString(name, description, hour, extend = 0, id) {
   /* 
     Calculating the height:
     The extend value should always add to it 1 number to we do not get
@@ -58,6 +58,13 @@ function getAddString(name, description, extend = 0, id) {
 
   // The description is not required to add An item so we check before we add the item
   if (description) result += `<div class="description">${description}</div>`;
+
+  // Adding the end time for small devices because we can not show many hours at the small devices
+  if (extend > 0) {
+    // Getting the end time from the table cells instead of doing alot of if statements and calculations
+    let endTime = tableRows[hour + extend].children[0].textContent;
+    result += `<div class="endtime">Ends on ${endTime}</div>`;
+  }
 
   // Closeing the html string
   result += '</div>';
@@ -143,6 +150,7 @@ function convertItemToNewNode(newItem) {
   const newElement = getAddString(
     newItem.name,
     newItem.description,
+    newItem.hour,
     parseInt(newItem.extendTime),
     newItem.id
   );
