@@ -191,21 +191,20 @@ td .item {
   left: 50%;
   transform: translateX(-50%);
   overflow-y: auto;
+  /* I added z-index so on javascript clicks when the shift is extended the click does not go for td */
+  z-index: 1;
 }
 
-/* width */
 td .item::-webkit-scrollbar {
   width: 6px;
   margin: 1rem 0;
 }
 
-/* Track */
 td .item::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
 }
 
-/* Handle */
 td .item::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background: var(--dark-white);

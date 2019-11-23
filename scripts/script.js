@@ -1,3 +1,4 @@
+const table = document.getElementById('table');
 // Add menu is the menu that we see when we click on button add
 const addMenu = document.getElementById('add-menu');
 
@@ -20,7 +21,12 @@ const itemColors = ['gradient-primary', 'gradient-secondary', 'red-gradient'];
 // A variable to hold all the items
 let items = [];
 
+// An id that we use as attribute for deleting items
 let currentId = 0;
+
+// A variable we use to store the items when the user click on it on table
+// So we can do things with it later like delete it or extend it
+let selectedItem;
 
 // An IIFE that intalize the values from local storage
 
@@ -146,6 +152,41 @@ function convertItemToNewNode(newItem) {
   addCell.innerHTML = newElement;
 }
 
+// A function for removing items on table click
+function removeItem(e) {
+  e.stopPropagation();
+
+  let target = e.target;
+  if (target.classList.contains('item')) selectedItem = target;
+  else if (
+    target.classList.contains('name') ||
+    target.classList.contains('description')
+  )
+    selectedItem = target.parentNode;
+  else return;
+
+  if (confirm('remove')) {
+    let targetID = selectedItem.getAttribute('item-id');
+    let targetIndex;
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id == targetID) {
+        targetIndex = i;
+        break;
+      }
+    }
+
+    if (targetIndex) {
+      items.splice(targetIndex, 1);
+      saveToLocalStorage();
+      selectedItem.remove();
+    } else {
+      // Just in case
+      alert('There is an error!! Item not found!! Please try again');
+    }
+  }
+}
+
 // Events
 // Event to add button
 document
@@ -173,3 +214,6 @@ document.getElementById('removeItems').addEventListener('click', () => {
   saveToLocalStorage();
   Array.from(document.querySelectorAll('.item')).forEach(ele => ele.remove());
 });
+
+// We remove items on table click
+table.addEventListener('click', removeItem);
