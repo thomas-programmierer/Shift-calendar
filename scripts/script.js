@@ -51,13 +51,13 @@ let selectedShift;
 (() => {
   // Adding colors to add menu first
   shiftColors.forEach((ele, index) => {
-    let newElement = document.createElement('div');
+    const newElement = document.createElement('div');
     newElement.classList.add(ele);
     if (index === 0) newElement.classList.add(colorsSelectedClass);
     colorsAddFrom.appendChild(newElement);
   });
 
-  let values = JSON.parse(localStorage.getItem('shifts'));
+  const values = JSON.parse(localStorage.getItem('shifts'));
   if (values) {
     shifts = values;
   } else return;
@@ -94,7 +94,7 @@ function getAddString(name, description, hour, extend = 0, id, shiftColor) {
   // Adding the end time for small devices because we can not show many hours at the small devices
   if (extend > 0 && hour + extend < tableRows.length) {
     // Getting the end time from the table cells instead of doing alot of if statements and calculations
-    let endTime = tableRows[hour + extend].children[0].textContent;
+    const endTime = tableRows[hour + extend].children[0].textContent;
     result += `<div class="endtime">Ends on ${endTime}</div>`;
   }
 
@@ -122,21 +122,21 @@ class Shift {
 }
 
 // A function for intalizing all the input vlaues to the nomral values
-let emptyAddFromValues = () => {
+const emptyAddFromValues = () => {
   addForm.name.value = '';
   addForm.description.value = '';
   addForm.extend.value = 0;
 };
 
 // A function that save shifts array to the local storage
-let saveToLocalStorage = () => {
+const saveToLocalStorage = () => {
   localStorage.setItem('shifts', JSON.stringify(shifts));
 };
 
 function shiftExist(newShift) {
   // Checking if there is no itme in that time
   for (let i = 0; i < shifts.length; i++) {
-    let ele = shifts[i];
+    const ele = shifts[i];
     if (newShift.id == ele.id) continue;
     else if (
       (ele.day === newShift.day &&
@@ -157,7 +157,7 @@ function shiftExist(newShift) {
 }
 
 // A function that add the shift to the table and to the array
-let addShift = e => {
+const addShift = e => {
   e.preventDefault();
 
   // Getting values
@@ -225,16 +225,16 @@ function selectShift(e) {
   editForm.editName.value = selectedShift.querySelector('.name').textContent;
 
   // Checking if there is description
-  let description = selectedShift.querySelector('.description');
+  const description = selectedShift.querySelector('.description');
   if (description) editForm.editDescription.value = description.textContent;
   else editForm.editDescription.value = '';
 
-  let extendTime =
+  const extendTime =
     (parseInt(selectedShift.style.height) + shiftPadding) / shiftHeight - 1;
   editForm.extendTime.value = extendTime;
 
   // Positing the edit form
-  let mouse = {
+  const mouse = {
     x: e.pageX,
     y: e.pageY
   };
@@ -268,9 +268,8 @@ function removeShift() {
   // Checking if it is not a miss click
   if (confirm('Are you sure??')) {
     // Getting the index of the shift that wanted to be deleted
-    let targetID = selectedShift.getAttribute('shift-id');
-    let targetIndex = -1;
-    targetIndex = findShift(targetID);
+    const targetID = selectedShift.getAttribute('shift-id');
+    const targetIndex = findShift(targetID);
 
     // Checking that the shift is found
     if (targetIndex != -1) {
@@ -338,12 +337,12 @@ editForm.addEventListener('submit', e => {
   e.preventDefault();
 
   // Finding the shifts
-  let selectedShiftId = selectedShift.getAttribute('shift-id');
-  let shiftIndex = findShift(selectedShiftId);
+  const selectedShiftId = selectedShift.getAttribute('shift-id');
+  const shiftIndex = findShift(selectedShiftId);
 
   // This is a variable just to check if there is already a shift when the new extending time
   // If there is it will save the new name and description but not the new extend time
-  let oldExtendTime = shifts[shiftIndex].extendTime;
+  const oldExtendTime = shifts[shiftIndex].extendTime;
 
   // Changing the value
   shifts[shiftIndex].name = editForm.editName.value;
