@@ -35,6 +35,7 @@ html {
 * {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -62,6 +63,8 @@ select {
   font-size: 1.2rem;
   outline: none;
   border: 1px solid var(--darker-white);
+  -webkit-transition: border-color 0.4s ease-in-out;
+  -o-transition: border-color 0.4s ease-in-out;
   transition: border-color 0.4s ease-in-out;
 }
 
@@ -96,11 +99,28 @@ a {
   right: 0;
   bottom: 0;
   left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   z-index: 999;
+  -webkit-animation: opacityAnimation 0.2s;
   animation: opacityAnimation 0.2s;
+}
+
+@-webkit-keyframes opacityAnimation {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes opacityAnimation {
@@ -136,6 +156,14 @@ a {
 
 /* Other gradient */
 .red-gradient {
+  background: -o-linear-gradient(left top, #ff3636, #ff2020);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#ff3636),
+    to(#ff2020)
+  );
   background: linear-gradient(to right bottom, #ff3636, #ff2020);
 }
 
@@ -156,6 +184,8 @@ button,
   color: none;
   outline: none;
   border: none;
+  -webkit-transition: opacity 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-out;
   transition: opacity 0.2s ease-out;
 }
 
@@ -202,8 +232,14 @@ nav * {
 }
 
 nav > .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -236,6 +272,7 @@ td:not(:first-child) {
 
 td .item {
   color: var(--white-color);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
   border-radius: 5px;
@@ -245,25 +282,53 @@ td .item {
   word-break: break-all;
   top: 5px;
   left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
   overflow-y: auto;
   /* I added z-index so on javascript clicks when the shift is extended the click does not go for td */
   z-index: 1;
+  -webkit-animation: itemAnimation 0.2s ease-in;
   animation: itemAnimation 0.2s ease-in;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 
-@keyframes itemAnimation {
+@-webkit-keyframes itemAnimation {
   from {
     opacity: 0;
+    -webkit-transform: translateY(-10px) translateX(-50%);
     transform: translateY(-10px) translateX(-50%);
   }
 
   to {
     opacity: 1;
+    -webkit-transform: translateY(0) translateX(-50%);
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
+@keyframes itemAnimation {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(-10px) translateX(-50%);
+    transform: translateY(-10px) translateX(-50%);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0) translateX(-50%);
     transform: translateY(0) translateX(-50%);
   }
 }
@@ -323,6 +388,8 @@ table tbody td:first-child {
 }
 
 table tbody tr {
+  -webkit-transition: background 0.2s;
+  -o-transition: background 0.2s;
   transition: background 0.2s;
 }
 
@@ -361,17 +428,34 @@ table tbody td:not(:first-child) {
   left: 0;
   border-radius: 10px;
   padding: 1rem;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
   display: none;
+  -webkit-animation: fromLeft 0.2s ease-in-out;
   animation: fromLeft 0.2s ease-in-out;
 }
 
-@keyframes fromLeft {
+@-webkit-keyframes fromLeft {
   from {
+    -webkit-transform: translateX(-10px);
     transform: translateX(-10px);
     opacity: 0;
   }
   to {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fromLeft {
+  from {
+    -webkit-transform: translateX(-10px);
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translateX(0);
     transform: translateX(0);
     opacity: 1;
   }
@@ -450,6 +534,7 @@ table tbody td:not(:first-child) {
 #tutorial .content img {
   width: 100%;
   margin: 1rem 0;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 

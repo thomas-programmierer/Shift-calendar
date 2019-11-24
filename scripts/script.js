@@ -238,13 +238,7 @@ function selectItem(e) {
 
 // A function just to find a item index in the array items based on Id
 function findItem(itemId) {
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].id == itemId) {
-      return i;
-    }
-  }
-
-  return -1;
+  return items.findIndex(ele => itemId == ele.id);
 }
 
 function removeItem() {
