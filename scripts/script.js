@@ -204,6 +204,7 @@ function selectItem(e) {
   // Checking if there is description
   let description = selectedItem.querySelector('.description');
   if (description) editForm.editDescription.value = description.textContent;
+  else editForm.editDescription.value = '';
 
   let extendTime =
     (parseInt(selectedItem.style.height) + itemPadding) / itemHeight - 1;
