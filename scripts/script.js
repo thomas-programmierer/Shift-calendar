@@ -190,7 +190,8 @@ function selectItem(e) {
   if (target.classList.contains('item')) selectedItem = target;
   else if (
     target.classList.contains('name') ||
-    target.classList.contains('description')
+    target.classList.contains('description') ||
+    target.classList.contains('endtime')
   )
     selectedItem = target.parentNode;
   else return;

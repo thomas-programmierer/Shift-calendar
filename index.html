@@ -217,7 +217,7 @@
 
     <!-- The form for editing or removing an item from the table -->
     <form id="edit-form">
-      <p class="text-center title">Edit</p>
+      <p class="text-center title">Edit <i class="fas fa-pen"></i></p>
       <hr>
 
       <!-- The name field -->
@@ -237,10 +237,49 @@
       <button class="btn-secondary" id="delete-shift">Delete <i class="fas fa-trash"></i></button>
       <button class="btn-darker-white" id="cancel-edit">Cancel <i class="fas fa-sign-out-alt"></i></button>
     </form>
+
+    <!-- The tutorial -->
+    <div class="overlay" id="tutorial">
+      <div class="content">
+        <h1 class="text-center">Welcome to "Shift Calendar"</h1>
+        <hr>
+        <h2>About this app <i class="fas fa-info-circle"></i></h2>
+        <div class="thick-line"></div>
+        <p>The shift calendar is an app to register your worker's shifts at your workplace. Like if "Jhon" will work
+          from 9 AM - 12 PM you can register that on the app. This app can just have one shift at a time. Like at 10 AM
+          its Jhon shift. So you can not add another shift.</p>
+        <img src="Images/Home-page-screenshot-1.png" alt="Webpage image" />
+        <h2>How this app works <i class="fas fa-question"></i></h2>
+        <div class="thick-line"></div>
+        <p>This app uses your local storage to save data. The data is not saved on the server. The only one that can see
+          the shifts is the one who has access to your computer.<br> <br>
+          To add a shift or an item click on the button add an item. And then register the name, description, hour, day
+          and expend time. The description is not required.
+          <br><br>The expend time is how many hours in additional someone will work. If you leave at zero it means that
+          the
+          shift will be just one hour. If you leave it at two it means the shift is three hours.</p>
+        <img src="Images/Home-page-screenshot-2.png" alt="Webpage image" />
+
+        <h2>About the code <i class="fas fa-code"></i></h2>
+        <div class="thick-line"></div>
+
+        <p>This app/ webpage is made with pure Javascript and HTML, CSS. This app does not use any external libraries.
+          Or any server-side technology.
+          <br> The app fonts are from <a href="https://fonts.google.com/" target="_blank">google fonts</a> and icons are
+          from <a href="https://fontawesome.com/">font awsome</a>
+          <br><br>This code is hosted on <a href="https://github.com/Rami-Alkawadri/Shift-calendar"
+            target="_blank">github</a>
+          if you want to
+          downoaded or to see it. </p>
+
+        <button class="btn btn-primary" id="finish-tutorial">Finish</button>
+      </div>
+    </div>
   </main>
 
   <!-- Scripts -->
   <script src="scripts/script.js"></script>
+  <script src="scripts/tutorial.js"></script>
 </body>
 
 </html>

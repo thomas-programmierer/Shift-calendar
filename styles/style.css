@@ -24,6 +24,7 @@
     rgb(255, 80, 47),
     rgb(211, 67, 38)
   );
+  --link-color: #2f7ea3;
 }
 
 html {
@@ -74,6 +75,11 @@ input[type='text']:focus,
 input[type='number']:focus,
 select:focus {
   border-color: var(--secondary-color);
+}
+
+a {
+  color: var(--link-color);
+  padding-bottom: 0.1rem;
 }
 
 /* Ultilites */
@@ -131,6 +137,14 @@ select:focus {
 /* Other gradient */
 .red-gradient {
   background: linear-gradient(to right bottom, #ff3636, #ff2020);
+}
+
+.thick-line {
+  height: 3px;
+  width: 35%;
+  display: block;
+  margin: 0.5rem 0 1rem 0;
+  background: var(--black-color);
 }
 
 button,
@@ -223,7 +237,6 @@ td:not(:first-child) {
 td .item {
   color: var(--white-color);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
   padding: 0.5rem;
   border-radius: 5px;
   position: absolute;
@@ -236,16 +249,22 @@ td .item {
   overflow-y: auto;
   /* I added z-index so on javascript clicks when the shift is extended the click does not go for td */
   z-index: 1;
-  animation: itemAnimation 1s ease-in;
+  animation: itemAnimation 0.2s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 @keyframes itemAnimation {
   from {
-    max-height: 5vh;
+    opacity: 0;
+    transform: translateY(-10px) translateX(-50%);
   }
 
   to {
-    max-height: 100vh;
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
   }
 }
 
@@ -388,4 +407,55 @@ table tbody td:not(:first-child) {
   display: block;
   width: 100%;
   margin: 0.4rem 0;
+}
+
+/* Tutorial styling */
+#tutorial {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#tutorial .content {
+  margin: 0 1rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+  max-height: 800px;
+  overflow-y: auto;
+  background: var(--white-color);
+}
+
+#tutorial .content::-webkit-scrollbar {
+  width: 6px;
+  margin: 1rem 0;
+}
+
+#tutorial .content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#tutorial .content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+}
+
+#tutorial .content hr {
+  margin: 1rem 0;
+}
+
+#tutorial .content p {
+  font-size: 1.2rem;
+  line-height: 145%;
+  margin-bottom: 0.3rem;
+}
+
+#tutorial .content img {
+  width: 100%;
+  margin: 1rem 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+#finish-tutorial {
+  clear: both;
+  float: right;
+  margin: 1rem 0;
+  border-radius: 0;
 }
