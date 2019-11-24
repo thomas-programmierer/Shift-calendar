@@ -225,8 +225,8 @@ function selectItem(e) {
   // Now for y-axe
   const editFormHeight = parseInt(editForm.offsetWidth);
   if (mouse.y + editFormHeight > document.body.offsetHeight) {
-    // We divided by 1.83 because it is too much up and not too much down with the full height and with that it will be on the middle
-    yPosition -= editFormHeight - 50;
+    // We added 74px because it is not too much up and not too much down with the full height and with that it will be on the middle
+    yPosition -= editFormHeight + 74;
   }
 
   // Applying the position

@@ -13,16 +13,20 @@
   <!-- Styles -->
   <link rel="stylesheet" href="styles/style.css" />
   <link rel="stylesheet" href="styles/responsive_stytle.css" media="(max-width:1600px)">
+
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 </head>
 
 <body>
   <header>
     <nav>
       <div class="container">
-        <a href="index.html" class="brand">Calender</a>
+        <a href="index.html" class="brand">Calendar <i class="far fa-calendar-alt"></i></a>
         <ul>
-          <li><button id="add" class="btn-secondary">Add an item</button></li>
-          <li><button id="removeItems" class="btn-white">Remove all shifts</button></li>
+          <li><button id="add" class="btn-secondary">Add an item <i class="fas fa-plus"></i></button></li>
+          <li><button id="removeItems" class="btn-white">Remove all shifts <i class="far fa-trash-alt"></i></button>
+          </li>
         </ul>
       </div>
     </nav>
@@ -206,8 +210,8 @@
         <input type="number" name="extend" id="extend" value="0" min="0">
 
         <!-- Add and remove buttons -->
-        <input type="submit" class="btn btn-secondary" id="add-item" value="Save">
-        <button class="btn-darker-white" id="cancel-add">Close/ Cancel</button>
+        <button class="btn btn-secondary" id="add-item">Save <i class="far fa-save"></i></button>
+        <button class="btn-darker-white" id="cancel-add">Close/ Cancel <i class="fas fa-sign-out-alt"></i></button>
       </form>
     </div>
 
@@ -229,9 +233,9 @@
       <input type="number" id="extendTime" name="extendTime" min="0">
 
       <!-- The buttons -->
-      <input type="submit" class="btn btn-primary" id="save-edite" value="Save">
-      <button class="btn-secondary" id="delete-shift">Delete</button>
-      <button class="btn-darker-white" id="cancel-edit">Cancel</button>
+      <button class="btn btn-primary" id="save-edite">Save <i class="far fa-edit"></i></button>
+      <button class="btn-secondary" id="delete-shift">Delete <i class="fas fa-trash"></i></button>
+      <button class="btn-darker-white" id="cancel-edit">Cancel <i class="fas fa-sign-out-alt"></i></button>
     </form>
   </main>
 

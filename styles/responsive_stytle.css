@@ -133,6 +133,18 @@ main {
     width: 300px;
     left: 50% !important;
     transform: translateX(-50%);
+    animation: fromLeftRespnisve 0.2s ease-in-out;
+  }
+
+  @keyframes fromLeftRespnisve {
+    from {
+      transform: translateX(-60%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(-50%);
+      opacity: 1;
+    }
   }
 }
 

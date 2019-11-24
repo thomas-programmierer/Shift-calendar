@@ -59,6 +59,21 @@ select {
   width: 100%;
   margin: 1rem 0;
   font-size: 1.2rem;
+  outline: none;
+  border: 1px solid var(--darker-white);
+  transition: border-color 0.4s ease-in-out;
+}
+
+input[type='text']:hover,
+input[type='number']:hover,
+select:hover {
+  border-color: var(--black-color);
+}
+
+input[type='text']:focus,
+input[type='number']:focus,
+select:focus {
+  border-color: var(--secondary-color);
 }
 
 /* Ultilites */
@@ -79,6 +94,17 @@ select {
   align-items: center;
   justify-content: center;
   z-index: 999;
+  animation: opacityAnimation 0.2s;
+}
+
+@keyframes opacityAnimation {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .overlay > form {
@@ -359,6 +385,7 @@ table tbody td:not(:first-child) {
 #edit-form input[type='submit'],
 #edit-form button {
   font-size: 1rem;
-  float: right;
-  margin-left: 0.5rem;
+  display: block;
+  width: 100%;
+  margin: 0.4rem 0;
 }
