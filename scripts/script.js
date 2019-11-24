@@ -39,10 +39,16 @@ let selectedItem;
   let values = JSON.parse(localStorage.getItem('items'));
   if (values) {
     items = values;
-  }
+  } else return;
 
   // Adding all items to the table
   items.forEach(ele => convertItemToNewNode(ele));
+
+  /* 
+    This line is to stop making the current id start from 0 if there is
+    already an item in that id
+  */
+  if (items.length > 0) currentId = items[items.length - 1].id;
 })();
 
 function getAddString(name, description, hour, extend = 0, id) {
@@ -90,6 +96,7 @@ class Item {
     this.hour = hour;
     this.extendTime = extendTime;
     this.id = id;
+    console.log(id);
   }
 }
 
@@ -105,12 +112,32 @@ let saveToLocalStorage = () => {
   localStorage.setItem('items', JSON.stringify(items));
 };
 
+function itemExist(newItem) {
+  // Checking if there is no itme in that time
+  for (let i = 0; i < items.length; i++) {
+    let ele = items[i];
+    if (newItem.id == ele.id) continue;
+    else if (
+      (ele.day === newItem.day &&
+        ((ele.hour <= newItem.hour &&
+          ele.hour + ele.extendTime >= newItem.hour) ||
+          (ele.hour <= newItem.hour + newItem.extendTime &&
+            ele.hour + ele.extendTime >= newItem.hour))) ||
+      newItem.hour + newItem.extendTime >= tableRows.length
+    ) {
+      alert(
+        'There is already a shift in that time try to change the extend time or the day'
+      );
+      return true;
+    }
+  }
+
+  return false;
+}
+
 // A function that add the item to the table and to the array
 let addItem = e => {
   e.preventDefault();
-
-  // Increasing the id by one so no element will have the same ID
-  currentId++;
 
   // Getting values
   const newItem = new Item(
@@ -119,27 +146,10 @@ let addItem = e => {
     addForm.day.value,
     parseInt(addForm.hour.value),
     parseInt(addForm.extend.value),
-    currentId
+    ++currentId
   );
 
-  // Checking if there is no itme in that time
-  let availabe = true;
-  for (let i = 0; i < items.length; i++) {
-    let ele = items[i];
-    if (
-      ele.day === newItem.day &&
-      ((ele.hour <= newItem.hour &&
-        ele.hour + ele.extendTime >= newItem.hour) ||
-        (ele.hour <= newItem.hour + newItem.extendTime &&
-          ele.hour + ele.extendTime >= newItem.hour + newItem.extendTime))
-    ) {
-      availabe = false;
-      alert('There is already a shift in that time');
-      break;
-    }
-  }
-
-  if (!availabe) return;
+  if (itemExist(newItem)) return;
 
   // Adding the item to the array and saving it to the local storage
   items.push(newItem);
@@ -171,6 +181,11 @@ function convertItemToNewNode(newItem) {
 function selectItem(e) {
   e.stopPropagation();
 
+  /*
+    This place of code here checks if the item that got clicked is an item
+    and then assigning it to selectedItem for future process like deleting the item
+    or chaning its value
+  */
   let target = e.target;
   if (target.classList.contains('item')) selectedItem = target;
   else if (
@@ -214,25 +229,31 @@ function selectItem(e) {
     yPosition -= editFormHeight - 50;
   }
 
+  // Applying the position
   editForm.style.top = yPosition + 'px';
   editForm.style.left = xPosition + 'px';
 }
 
+// A function just to find a item index in the array items based on Id
 function findItem(itemId) {
   for (let i = 0; i < items.length; i++) {
     if (items[i].id == itemId) {
       return i;
     }
   }
+
+  return -1;
 }
 
 function removeItem() {
+  // Checking if it is not a miss click
   if (confirm('Are you sure??')) {
+    // Getting the index of the item that wanted to be deleted
     let targetID = selectedItem.getAttribute('item-id');
     let targetIndex = -1;
-
     targetIndex = findItem(targetID);
 
+    // Checking that the item is found
     if (targetIndex != -1) {
       items.splice(targetIndex, 1);
       saveToLocalStorage();
@@ -246,9 +267,11 @@ function removeItem() {
 
 // Events
 // Event to add button
-document
-  .getElementById('add')
-  .addEventListener('click', () => (addMenu.style.display = 'flex'));
+document.getElementById('add').addEventListener('click', () => {
+  // Hiding edit form if it shown and displying the add menu
+  editForm.style.display = 'none';
+  addMenu.style.display = 'flex';
+});
 
 // Event for cancel button
 document.getElementById('cancel-add').addEventListener('click', e => {
@@ -264,6 +287,9 @@ addForm.addEventListener('submit', addItem);
 
 // Event for removing all shifts
 document.getElementById('removeItems').addEventListener('click', () => {
+  // Hiding the edit form if it is displayed
+  editForm.style.display = 'none';
+
   // Just to be sure it is not a miss click
   if (!confirm('Are you sure')) return;
 
@@ -287,4 +313,36 @@ document.getElementById('delete-shift').addEventListener('click', e => {
   e.preventDefault();
   editForm.style.display = 'none';
   removeItem();
+});
+
+editForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  // Finding the items
+  let selectedItemId = selectedItem.getAttribute('item-id');
+  let itemIndex = findItem(selectedItemId);
+
+  // This is a variable just to check if there is already an item when the new extending time
+  // If there is it will save the new name and description but not the new extend time
+  let oldExtendTime = items[itemIndex].extendTime;
+
+  // Changing the value
+  items[itemIndex].name = editForm.editName.value;
+  items[itemIndex].description = editForm.editDescription.value;
+  items[itemIndex].extendTime = parseInt(editForm.extendTime.value);
+
+  if (itemExist(items[itemIndex])) {
+    items[itemIndex].extendTime = oldExtendTime;
+    return;
+  } else {
+    // Removing the item from the node and hiding the edit form
+    selectedItem.remove();
+    editForm.style.display = 'none';
+
+    // Showing the new items
+    convertItemToNewNode(items[itemIndex]);
+
+    // Saving changes
+    saveToLocalStorage();
+  }
 });

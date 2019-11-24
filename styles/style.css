@@ -210,6 +210,17 @@ td .item {
   overflow-y: auto;
   /* I added z-index so on javascript clicks when the shift is extended the click does not go for td */
   z-index: 1;
+  animation: itemAnimation 1s ease-in;
+}
+
+@keyframes itemAnimation {
+  from {
+    max-height: 5vh;
+  }
+
+  to {
+    max-height: 100vh;
+  }
 }
 
 td .item::-webkit-scrollbar {
@@ -307,6 +318,18 @@ table tbody td:not(:first-child) {
   padding: 1rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
   display: none;
+  animation: fromLeft 0.2s ease-in-out;
+}
+
+@keyframes fromLeft {
+  from {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 #edit-form hr {
