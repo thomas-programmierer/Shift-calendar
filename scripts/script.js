@@ -128,8 +128,10 @@ let addItem = e => {
     let ele = items[i];
     if (
       ele.day === newItem.day &&
-      ele.hour <= newItem.hour &&
-      ele.hour + ele.extendTime >= newItem.hour
+      ((ele.hour <= newItem.hour &&
+        ele.hour + ele.extendTime >= newItem.hour) ||
+        (ele.hour <= newItem.hour + newItem.extendTime &&
+          ele.hour + ele.extendTime >= newItem.hour + newItem.extendTime))
     ) {
       availabe = false;
       alert('There is already a shift in that time');
@@ -216,17 +218,20 @@ function selectItem(e) {
   editForm.style.left = xPosition + 'px';
 }
 
+function findItem(itemId) {
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].id == itemId) {
+      return i;
+    }
+  }
+}
+
 function removeItem() {
   if (confirm('Are you sure??')) {
     let targetID = selectedItem.getAttribute('item-id');
     let targetIndex = -1;
 
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].id == targetID) {
-        targetIndex = i;
-        break;
-      }
-    }
+    targetIndex = findItem(targetID);
 
     if (targetIndex != -1) {
       items.splice(targetIndex, 1);
