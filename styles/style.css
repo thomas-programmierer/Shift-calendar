@@ -418,6 +418,27 @@ table tbody td:not(:first-child) {
   display: none;
 }
 
+#add-menu .colors {
+  display: inline-block;
+  margin: 1rem;
+  vertical-align: middle;
+}
+
+#add-menu .colors div {
+  width: 32px;
+  height: 32px;
+  margin-right: 20px;
+  cursor: pointer;
+
+  /* Outline style */
+  outline-offset: 4px;
+  display: inline-block;
+}
+
+#add-menu .colors div.selected {
+  outline: 4px solid var(--black-color);
+}
+
 /* edit-form */
 #edit-form {
   position: absolute;

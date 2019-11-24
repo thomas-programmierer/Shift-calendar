@@ -8,6 +8,13 @@ const addForm = document.getElementById('add-form');
 // The form for editing the values
 const editForm = document.getElementById('edit-form');
 
+// The color options in add form
+const colorsAddFrom = document.getElementById('colors');
+// The class for selected color
+const colorsSelectedClass = 'selected';
+// The current selected color index, 0 is the default
+let colorSelectedIndex = 0;
+
 /* 
   All table rows - The values starts from 1 not from 0 because
   the first cell is Always the time like (7:00AM) and we do not
@@ -36,6 +43,14 @@ let selectedItem;
 
 // An IIFE that intalize the values from local storage
 (() => {
+  // Adding colors to add menu first
+  itemColors.forEach((ele, index) => {
+    let newElement = document.createElement('div');
+    newElement.classList.add(ele);
+    if (index === 0) newElement.classList.add(colorsSelectedClass);
+    colorsAddFrom.appendChild(newElement);
+  });
+
   let values = JSON.parse(localStorage.getItem('items'));
   if (values) {
     items = values;
@@ -341,4 +356,15 @@ editForm.addEventListener('submit', e => {
     // Saving changes
     saveToLocalStorage();
   }
+});
+
+// Events for selecting the color
+Array.from(colorsAddFrom.querySelectorAll('div')).forEach((ele, index) => {
+  ele.addEventListener('click', () => {
+    colorsAddFrom
+      .querySelectorAll('div')
+      [colorSelectedIndex].classList.remove(colorsSelectedClass);
+    colorSelectedIndex = index;
+    ele.classList.add(colorsSelectedClass);
+  });
 });
