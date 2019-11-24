@@ -5,6 +5,9 @@ const addMenu = document.getElementById('add-menu');
 // Add form is the value that we get
 const addForm = document.getElementById('add-form');
 
+// The form for editing the values
+const editForm = document.getElementById('edit-form');
+
 /* 
   All table rows - The values starts from 1 not from 0 because
   the first cell is Always the time like (7:00AM) and we do not
@@ -14,6 +17,9 @@ const tableRows = Array.from(document.querySelectorAll('table tr'));
 
 // The item height 100px for all devices
 const itemHeight = 100;
+
+// The padding for the item - we need this to make some spaces between top and bottom border
+const itemPadding = 10;
 
 // Css classes for item backgrounds color
 const itemColors = ['gradient-primary', 'gradient-secondary', 'red-gradient'];
@@ -29,7 +35,6 @@ let currentId = 0;
 let selectedItem;
 
 // An IIFE that intalize the values from local storage
-
 (() => {
   let values = JSON.parse(localStorage.getItem('items'));
   if (values) {
@@ -44,10 +49,10 @@ function getAddString(name, description, hour, extend = 0, id) {
   /* 
     Calculating the height:
     The extend value should always add to it 1 number to we do not get
-    0 * the height. And we subtract 10 from it so we got a little space between the item and and cell borders
+    0 * the height. And we subtract itemPadding from it so we got a little space between the item and and cell borders
   */
   let height = (extend + 1) * itemHeight;
-  height -= 10;
+  height -= itemPadding;
 
   // Getting a random color
   const color = itemColors[Math.floor(Math.random() * itemColors.length)];
@@ -161,7 +166,7 @@ function convertItemToNewNode(newItem) {
 }
 
 // A function for removing items on table click
-function removeItem(e) {
+function selectItem(e) {
   e.stopPropagation();
 
   let target = e.target;
@@ -173,7 +178,45 @@ function removeItem(e) {
     selectedItem = target.parentNode;
   else return;
 
-  if (confirm('remove')) {
+  editForm.style.display = 'block';
+
+  // Adding the values for the edit form so it became easier to edit them
+  editForm.editName.value = selectedItem.querySelector('.name').textContent;
+
+  // Checking if there is description
+  let description = selectedItem.querySelector('.description');
+  if (description) editForm.editDescription.value = description.textContent;
+
+  let extendTime =
+    (parseInt(selectedItem.style.height) + itemPadding) / itemHeight - 1;
+  editForm.extendTime.value = extendTime;
+
+  // Positing the edit form
+  let mouse = {
+    x: e.x,
+    y: e.y
+  };
+
+  let yPosition = mouse.y;
+  let xPosition = mouse.x;
+
+  // Checking if the edit form widow overflowing the browser width
+  const editFormWidth = parseInt(editForm.offsetWidth);
+  if (mouse.x + editFormWidth > window.innerWidth) xPosition -= editFormWidth;
+
+  // Now for y-axe
+  const editFormHeight = parseInt(editForm.offsetWidth);
+  if (mouse.y + editFormHeight > window.innerHeight) {
+    // We divided by 1.83 because it is too much up and not too much down with the full height and with that it will be on the middle
+    yPosition -= editFormHeight / 1.83;
+  }
+
+  editForm.style.top = yPosition + 'px';
+  editForm.style.left = xPosition + 'px';
+}
+
+function removeItem() {
+  if (confirm('Are you sure??')) {
     let targetID = selectedItem.getAttribute('item-id');
     let targetIndex = -1;
 
@@ -224,4 +267,10 @@ document.getElementById('removeItems').addEventListener('click', () => {
 });
 
 // We remove items on table click
-table.addEventListener('click', removeItem);
+table.addEventListener('click', selectItem);
+
+// Event for hiding the edit form
+document.getElementById('cancel-edit').addEventListener('click', e => {
+  e.preventDefault();
+  editForm.style.display = 'none';
+});
