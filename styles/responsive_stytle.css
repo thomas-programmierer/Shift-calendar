@@ -128,4 +128,16 @@ main {
   nav .container {
     flex-direction: column;
   }
+
+  #edit-form {
+    width: 300px;
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 300px) {
+  #edit-form {
+    width: 250px;
+  }
 }

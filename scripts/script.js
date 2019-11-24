@@ -65,7 +65,7 @@ function getAddString(name, description, hour, extend = 0, id) {
   if (description) result += `<div class="description">${description}</div>`;
 
   // Adding the end time for small devices because we can not show many hours at the small devices
-  if (extend > 0) {
+  if (extend > 0 && hour + extend < tableRows.length) {
     // Getting the end time from the table cells instead of doing alot of if statements and calculations
     let endTime = tableRows[hour + extend].children[0].textContent;
     result += `<div class="endtime">Ends on ${endTime}</div>`;
@@ -193,8 +193,8 @@ function selectItem(e) {
 
   // Positing the edit form
   let mouse = {
-    x: e.x,
-    y: e.y
+    x: e.pageX,
+    y: e.pageY
   };
 
   let yPosition = mouse.y;
@@ -202,13 +202,14 @@ function selectItem(e) {
 
   // Checking if the edit form widow overflowing the browser width
   const editFormWidth = parseInt(editForm.offsetWidth);
-  if (mouse.x + editFormWidth > window.innerWidth) xPosition -= editFormWidth;
+  if (mouse.x + editFormWidth > document.body.offsetWidth)
+    xPosition -= editFormWidth;
 
   // Now for y-axe
   const editFormHeight = parseInt(editForm.offsetWidth);
-  if (mouse.y + editFormHeight > window.innerHeight) {
+  if (mouse.y + editFormHeight > document.body.offsetHeight) {
     // We divided by 1.83 because it is too much up and not too much down with the full height and with that it will be on the middle
-    yPosition -= editFormHeight / 1.83;
+    yPosition -= editFormHeight - 50;
   }
 
   editForm.style.top = yPosition + 'px';
@@ -273,4 +274,12 @@ table.addEventListener('click', selectItem);
 document.getElementById('cancel-edit').addEventListener('click', e => {
   e.preventDefault();
   editForm.style.display = 'none';
+});
+
+// Event for when clicking on remove on edit form
+document.getElementById('delete-shift').addEventListener('click', e => {
+  // So it does not go to any link and scroll up to top
+  e.preventDefault();
+  editForm.style.display = 'none';
+  removeItem();
 });
