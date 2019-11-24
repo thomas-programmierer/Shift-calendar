@@ -18,4 +18,4 @@
 <h2>About the code <i class="fas fa-code"></i></h2>
 <div class="thick-line"></div
 <p>This app/ webpage is made with pure Javascript and HTML, CSS. This apdoes not use any external libraries.
-Or any server-side technology.<br> The app fonts are from <a href="https://fonts.google.com/target="_blank">google fonts</a> and icons are from <a href="https://fontawesome.com/">font awsome</a>
+Or any server-side technology.<br> The app fonts are from <a href="https://fonts.google.com/" target="_blank">google fonts</a> and icons are from <a href="https://fontawesome.com/" target="_blank">font awsome</a>
