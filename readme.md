@@ -7,11 +7,13 @@
 <h2>How does this app works ?</h2>
 <p>This app uses your local storage to save data. The data is not saveon the server. The only one that can see
   the shifts is the one who has access to your computer.<br> <br>
-  To add a shift or an item click on the button add an item. And theregister the name, description, hour, day
+  To add a shift on the button add an shift on top. And the register the name, description, hour, day
   and expend time. The description is not required.
   <br><br>The expend time is how many hours in additional someone wilwork. If you leave at zero it means that
   the
-  shift will be just one hour. If you leave it at two it means the shifis three hours.</p>
+  shift will be just one hour. If you leave it at two it means the shift will be three hours.
+  <br>And you can pick the color of your shift</p>
+
 <img src="Images/Home-page-screenshot-2.png" alt="Webpage image" />
 <h2>About the code</h2>
 <p>This app/ webpage is made with pure Javascript and HTML, CSS. This apdoes not use any external libraries.

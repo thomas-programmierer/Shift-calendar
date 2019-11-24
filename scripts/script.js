@@ -22,67 +22,73 @@ let colorSelectedIndex = 0;
 */
 const tableRows = Array.from(document.querySelectorAll('table tr'));
 
-// The item height 100px for all devices
-const itemHeight = 100;
+// The shift height 100px for all devices
+const shiftHeight = 100;
 
-// The padding for the item - we need this to make some spaces between top and bottom border
-const itemPadding = 10;
+// The padding for the shift - we need this to make some spaces between top and bottom border
+const shiftPadding = 10;
 
-// Css classes for item backgrounds color
-const itemColors = ['gradient-primary', 'gradient-secondary', 'red-gradient'];
+// Css classes for shift backgrounds color
+const shiftColors = [
+  'gradient-primary',
+  'gradient-secondary',
+  'red-gradient',
+  'green-gradient',
+  'purple-gradient'
+];
 
-// A variable to hold all the items
-let items = [];
+// A variable to hold all the shifts
+let shifts = [];
 
-// An id that we use as attribute for deleting items
+// An id that we use as attribute for deleting shifts
 let currentId = 0;
 
-// A variable we use to store the items when the user click on it on table
+// A variable we use to store the shifts when the user click on it on table
 // So we can do things with it later like delete it or extend it
-let selectedItem;
+let selectedShift;
 
 // An IIFE that intalize the values from local storage
 (() => {
   // Adding colors to add menu first
-  itemColors.forEach((ele, index) => {
+  shiftColors.forEach((ele, index) => {
     let newElement = document.createElement('div');
     newElement.classList.add(ele);
     if (index === 0) newElement.classList.add(colorsSelectedClass);
     colorsAddFrom.appendChild(newElement);
   });
 
-  let values = JSON.parse(localStorage.getItem('items'));
+  let values = JSON.parse(localStorage.getItem('shifts'));
   if (values) {
-    items = values;
+    shifts = values;
   } else return;
 
-  // Adding all items to the table
-  items.forEach(ele => convertItemToNewNode(ele));
+  // Adding all shifts to the table
+  shifts.forEach(ele => convertShiftToNewNode(ele));
 
   /* 
     This line is to stop making the current id start from 0 if there is
-    already an item in that id
+    already an shift in that id
   */
-  if (items.length > 0) currentId = items[items.length - 1].id;
+  if (shifts.length > 0) currentId = shifts[shifts.length - 1].id;
 })();
 
-function getAddString(name, description, hour, extend = 0, id) {
+function getAddString(name, description, hour, extend = 0, id, shiftColor) {
   /* 
     Calculating the height:
     The extend value should always add to it 1 number to we do not get
-    0 * the height. And we subtract itemPadding from it so we got a little space between the item and and cell borders
+    0 * the height. And we subtract shiftPadding from it so we got a little space between the shift and and cell borders
   */
-  let height = (extend + 1) * itemHeight;
-  height -= itemPadding;
+  let height = (extend + 1) * shiftHeight;
+  height -= shiftPadding;
 
-  // Getting a random color
-  const color = itemColors[Math.floor(Math.random() * itemColors.length)];
+  // Getting the color
+  const color = shiftColor;
 
   // We return the value as a template string because there is many variables we need to use
-  let result = `<div class="item ${color}" style="height: ${height}px" item-id="${id}">
+  let result = `<div class="shift ${color}" style="height: ${height}px" shift-id="${id}">
         <div class="name">${name}</div>`;
 
-  // The description is not required to add An item so we check before we add the item
+  // The description is not required to add A shift so we check before we add the shift
   if (description) result += `<div class="description">${description}</div>`;
 
   // Adding the end time for small devices because we can not show many hours at the small devices
@@ -98,20 +104,20 @@ function getAddString(name, description, hour, extend = 0, id) {
 }
 
 // Classes
-class Item {
+class Shift {
   /* 
-    This is a class for the items we add. It is just a simple class
+    This is a class for the shifts we add. It is just a simple class
     that stores (name, description, day, hour, extendTime) so it will be easier
-    to deal with the items
+    to deal with the shifts
   */
-  constructor(name, description, day, hour, extendTime, id) {
+  constructor(name, description, day, hour, extendTime, id, shiftColor) {
     this.name = name;
     this.description = description;
     this.day = day;
     this.hour = hour;
     this.extendTime = extendTime;
     this.id = id;
-    console.log(id);
+    this.shiftColor = shiftColor;
   }
 }
 
@@ -122,23 +128,23 @@ let emptyAddFromValues = () => {
   addForm.extend.value = 0;
 };
 
-// A function that save items array to the local storage
+// A function that save shifts array to the local storage
 let saveToLocalStorage = () => {
-  localStorage.setItem('items', JSON.stringify(items));
+  localStorage.setItem('shifts', JSON.stringify(shifts));
 };
 
-function itemExist(newItem) {
+function shiftExist(newShift) {
   // Checking if there is no itme in that time
-  for (let i = 0; i < items.length; i++) {
-    let ele = items[i];
-    if (newItem.id == ele.id) continue;
+  for (let i = 0; i < shifts.length; i++) {
+    let ele = shifts[i];
+    if (newShift.id == ele.id) continue;
     else if (
-      (ele.day === newItem.day &&
-        ((ele.hour <= newItem.hour &&
-          ele.hour + ele.extendTime >= newItem.hour) ||
-          (ele.hour <= newItem.hour + newItem.extendTime &&
-            ele.hour + ele.extendTime >= newItem.hour))) ||
-      newItem.hour + newItem.extendTime >= tableRows.length
+      (ele.day === newShift.day &&
+        ((ele.hour <= newShift.hour &&
+          ele.hour + ele.extendTime >= newShift.hour) ||
+          (ele.hour <= newShift.hour + newShift.extendTime &&
+            ele.hour + ele.extendTime >= newShift.hour))) ||
+      newShift.hour + newShift.extendTime >= tableRows.length
     ) {
       alert(
         'There is already a shift in that time try to change the extend time or the day'
@@ -150,79 +156,81 @@ function itemExist(newItem) {
   return false;
 }
 
-// A function that add the item to the table and to the array
-let addItem = e => {
+// A function that add the shift to the table and to the array
+let addShift = e => {
   e.preventDefault();
 
   // Getting values
-  const newItem = new Item(
+  const newShift = new Shift(
     addForm.name.value,
     addForm.description.value,
     addForm.day.value,
     parseInt(addForm.hour.value),
     parseInt(addForm.extend.value),
-    ++currentId
+    ++currentId,
+    shiftColors[colorSelectedIndex]
   );
 
-  if (itemExist(newItem)) return;
+  if (shiftExist(newShift)) return;
 
-  // Adding the item to the array and saving it to the local storage
-  items.push(newItem);
+  // Adding the shift to the array and saving it to the local storage
+  shifts.push(newShift);
   saveToLocalStorage();
 
   // Emptying the values
   emptyAddFromValues();
 
-  // Adding the item to the table
-  convertItemToNewNode(newItem);
+  // Adding the shift to the table
+  convertShiftToNewNode(newShift);
 };
 
-// A function that get the item of type class and add it to the table
-function convertItemToNewNode(newItem) {
+// A function that get the shift of type class and add it to the table
+function convertShiftToNewNode(newShift) {
   const newElement = getAddString(
-    newItem.name,
-    newItem.description,
-    newItem.hour,
-    parseInt(newItem.extendTime),
-    newItem.id
+    newShift.name,
+    newShift.description,
+    newShift.hour,
+    parseInt(newShift.extendTime),
+    newShift.id,
+    newShift.shiftColor
   );
-  // Getting the cell that will contain the new item
-  const addCell = tableRows[newItem.hour].children[newItem.day];
+  // Getting the cell that will contain the new shift
+  const addCell = tableRows[newShift.hour].children[newShift.day];
 
   addCell.innerHTML = newElement;
 }
 
-// A function for removing items on table click
-function selectItem(e) {
+// A function for removing shifts on table click
+function selectShift(e) {
   e.stopPropagation();
 
   /*
-    This place of code here checks if the item that got clicked is an item
-    and then assigning it to selectedItem for future process like deleting the item
+    This place of code here checks if the shift that got clicked is a shift
+    and then assigning it to selectedShift for future process like deleting the shift
     or chaning its value
   */
   let target = e.target;
-  if (target.classList.contains('item')) selectedItem = target;
+  if (target.classList.contains('shift')) selectedShift = target;
   else if (
     target.classList.contains('name') ||
     target.classList.contains('description') ||
     target.classList.contains('endtime')
   )
-    selectedItem = target.parentNode;
+    selectedShift = target.parentNode;
   else return;
 
   editForm.style.display = 'block';
 
   // Adding the values for the edit form so it became easier to edit them
-  editForm.editName.value = selectedItem.querySelector('.name').textContent;
+  editForm.editName.value = selectedShift.querySelector('.name').textContent;
 
   // Checking if there is description
-  let description = selectedItem.querySelector('.description');
+  let description = selectedShift.querySelector('.description');
   if (description) editForm.editDescription.value = description.textContent;
   else editForm.editDescription.value = '';
 
   let extendTime =
-    (parseInt(selectedItem.style.height) + itemPadding) / itemHeight - 1;
+    (parseInt(selectedShift.style.height) + shiftPadding) / shiftHeight - 1;
   editForm.extendTime.value = extendTime;
 
   // Positing the edit form
@@ -251,27 +259,27 @@ function selectItem(e) {
   editForm.style.left = xPosition + 'px';
 }
 
-// A function just to find a item index in the array items based on Id
-function findItem(itemId) {
-  return items.findIndex(ele => itemId == ele.id);
+// A function just to find a shift index in the array shifts based on Id
+function findShift(shiftId) {
+  return shifts.findIndex(ele => shiftId == ele.id);
 }
 
-function removeItem() {
+function removeShift() {
   // Checking if it is not a miss click
   if (confirm('Are you sure??')) {
-    // Getting the index of the item that wanted to be deleted
-    let targetID = selectedItem.getAttribute('item-id');
+    // Getting the index of the shift that wanted to be deleted
+    let targetID = selectedShift.getAttribute('shift-id');
     let targetIndex = -1;
-    targetIndex = findItem(targetID);
+    targetIndex = findShift(targetID);
 
-    // Checking that the item is found
+    // Checking that the shift is found
     if (targetIndex != -1) {
-      items.splice(targetIndex, 1);
+      shifts.splice(targetIndex, 1);
       saveToLocalStorage();
-      selectedItem.remove();
+      selectedShift.remove();
     } else {
       // Just in case
-      alert('There is an error!! Item not found!! Please try again');
+      alert('There is an error!! shift not found!! Please try again');
     }
   }
 }
@@ -294,23 +302,23 @@ document.getElementById('cancel-add').addEventListener('click', e => {
 });
 
 // Event for submiting the add form
-addForm.addEventListener('submit', addItem);
+addForm.addEventListener('submit', addShift);
 
 // Event for removing all shifts
-document.getElementById('removeItems').addEventListener('click', () => {
+document.getElementById('removeShifts').addEventListener('click', () => {
   // Hiding the edit form if it is displayed
   editForm.style.display = 'none';
 
   // Just to be sure it is not a miss click
   if (!confirm('Are you sure')) return;
 
-  items = [];
+  shifts = [];
   saveToLocalStorage();
-  Array.from(document.querySelectorAll('.item')).forEach(ele => ele.remove());
+  Array.from(document.querySelectorAll('.shift')).forEach(ele => ele.remove());
 });
 
-// We remove items on table click
-table.addEventListener('click', selectItem);
+// We remove shifts on table click
+table.addEventListener('click', selectShift);
 
 // Event for hiding the edit form
 document.getElementById('cancel-edit').addEventListener('click', e => {
@@ -323,35 +331,35 @@ document.getElementById('delete-shift').addEventListener('click', e => {
   // So it does not go to any link and scroll up to top
   e.preventDefault();
   editForm.style.display = 'none';
-  removeItem();
+  removeShift();
 });
 
 editForm.addEventListener('submit', e => {
   e.preventDefault();
 
-  // Finding the items
-  let selectedItemId = selectedItem.getAttribute('item-id');
-  let itemIndex = findItem(selectedItemId);
+  // Finding the shifts
+  let selectedShiftId = selectedShift.getAttribute('shift-id');
+  let shiftIndex = findShift(selectedShiftId);
 
-  // This is a variable just to check if there is already an item when the new extending time
+  // This is a variable just to check if there is already a shift when the new extending time
   // If there is it will save the new name and description but not the new extend time
-  let oldExtendTime = items[itemIndex].extendTime;
+  let oldExtendTime = shifts[shiftIndex].extendTime;
 
   // Changing the value
-  items[itemIndex].name = editForm.editName.value;
-  items[itemIndex].description = editForm.editDescription.value;
-  items[itemIndex].extendTime = parseInt(editForm.extendTime.value);
+  shifts[shiftIndex].name = editForm.editName.value;
+  shifts[shiftIndex].description = editForm.editDescription.value;
+  shifts[shiftIndex].extendTime = parseInt(editForm.extendTime.value);
 
-  if (itemExist(items[itemIndex])) {
-    items[itemIndex].extendTime = oldExtendTime;
+  if (shiftExist(shifts[shiftIndex])) {
+    shifts[shiftIndex].extendTime = oldExtendTime;
     return;
   } else {
-    // Removing the item from the node and hiding the edit form
-    selectedItem.remove();
+    // Removing the shift from the node and hiding the edit form
+    selectedShift.remove();
     editForm.style.display = 'none';
 
-    // Showing the new items
-    convertItemToNewNode(items[itemIndex]);
+    // Showing the new shifts
+    convertShiftToNewNode(shifts[shiftIndex]);
 
     // Saving changes
     saveToLocalStorage();
@@ -361,9 +369,12 @@ editForm.addEventListener('submit', e => {
 // Events for selecting the color
 Array.from(colorsAddFrom.querySelectorAll('div')).forEach((ele, index) => {
   ele.addEventListener('click', () => {
+    // First removing the old selected shift
     colorsAddFrom
       .querySelectorAll('div')
       [colorSelectedIndex].classList.remove(colorsSelectedClass);
+
+    // And regestring the new index for future processing
     colorSelectedIndex = index;
     ele.classList.add(colorsSelectedClass);
   });

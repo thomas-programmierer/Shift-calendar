@@ -2,7 +2,7 @@
     - COLOR VALUES HENTED FROM: https://colorhunt.co/palette/147323
     - Z-index values:
         .overlay: 999
-        .td .item: 1
+        .td .shift: 1
         #edit-form: 2
 */
 :root {
@@ -167,6 +167,16 @@ a {
   background: linear-gradient(to right bottom, #ff3636, #ff2020);
 }
 
+.green-gradient {
+  background: -webkit-linear-gradient(to right bottom, #38a057, #3ca55c);
+  background: linear-gradient(to right bottom, #38a057, #3ca55c);
+}
+
+.purple-gradient {
+  background: -webkit-linear-gradient(to right bottom, #b06ab3, #b165b4);
+  background: linear-gradient(to right bottom, #b06ab3, #b165b4);
+}
+
 .thick-line {
   height: 3px;
   width: 35%;
@@ -219,10 +229,16 @@ button:hover,
 }
 
 /* Nav */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
 nav {
   background: var(--primary-color);
   color: var(--white-color);
-  padding: 1.5rem 0;
+  padding: 0.4rem 0;
   top: 0;
   left: 0;
 }
@@ -270,7 +286,7 @@ td:not(:first-child) {
   border: 0.1px solid var(--low-opacity-primary-color);
 }
 
-td .item {
+td .shift {
   color: var(--white-color);
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -288,8 +304,8 @@ td .item {
   overflow-y: auto;
   /* I added z-index so on javascript clicks when the shift is extended the click does not go for td */
   z-index: 1;
-  -webkit-animation: itemAnimation 0.2s ease-in;
-  animation: itemAnimation 0.2s ease-in;
+  -webkit-animation: shiftAnimation 0.2s ease-in;
+  animation: shiftAnimation 0.2s ease-in;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -305,7 +321,7 @@ td .item {
   flex-direction: column;
 }
 
-@-webkit-keyframes itemAnimation {
+@-webkit-keyframes shiftAnimation {
   from {
     opacity: 0;
     -webkit-transform: translateY(-10px) translateX(-50%);
@@ -319,7 +335,7 @@ td .item {
   }
 }
 
-@keyframes itemAnimation {
+@keyframes shiftAnimation {
   from {
     opacity: 0;
     -webkit-transform: translateY(-10px) translateX(-50%);
@@ -333,32 +349,32 @@ td .item {
   }
 }
 
-td .item::-webkit-scrollbar {
+td .shift::-webkit-scrollbar {
   width: 6px;
   margin: 1rem 0;
 }
 
-td .item::-webkit-scrollbar-track {
+td .shift::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
 }
 
-td .item::-webkit-scrollbar-thumb {
+td .shift::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background: var(--dark-white);
 }
 
-td .item .name {
+td .shift .name {
   font-size: 1.5rem;
 }
 
-td .item .description {
+td .shift .description {
   font-size: 1rem;
   margin-top: 0.5rem;
   color: var(--dark-white);
 }
 
-td .item .endtime {
+td .shift .endtime {
   display: none;
 }
 
@@ -418,13 +434,13 @@ table tbody td:not(:first-child) {
   display: none;
 }
 
-#add-menu .colors {
+.colors {
   display: inline-block;
   margin: 1rem;
   vertical-align: middle;
 }
 
-#add-menu .colors div {
+.colors div {
   width: 32px;
   height: 32px;
   margin-right: 20px;
@@ -435,7 +451,7 @@ table tbody td:not(:first-child) {
   display: inline-block;
 }
 
-#add-menu .colors div.selected {
+.colors div.selected {
   outline: 4px solid var(--black-color);
 }
 

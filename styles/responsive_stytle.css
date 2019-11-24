@@ -40,7 +40,7 @@ main {
     padding: 0;
   }
 
-  td .item .endtime {
+  td .shift .endtime {
     display: block;
     margin-top: 1rem;
   }
@@ -73,7 +73,7 @@ main {
     color: rgba(0, 0, 0, 0.6);
   }
 
-  td .item {
+  td .shift {
     height: 92px !important;
   }
 }
