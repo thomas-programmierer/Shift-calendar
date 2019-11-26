@@ -7,7 +7,7 @@
 <h2>How does this app works ?</h2>
 <p>This app uses your local storage to save data. The data is not saveon the server. The only one that can see
   the shifts is the one who has access to your computer.<br> <br>
-  To add a shift on the button add an shift on top. And the register the name, description, hour, day
+  To add a shift on the button add an shift on top. Or you can click on anytable cell and click add shift to add a shift on that time. And the register the name, description, hour, day
   and expend time. The description is not required.
   <br><br>The expend time is how many hours in additional someone wilwork. If you leave at zero it means that
   the

@@ -438,8 +438,8 @@ Array.from(document.querySelectorAll('tr')).forEach((tr, trIndex) => {
 
       // Show the add pop up and styling the position
       showAddPopup();
-      let yPosition = e.y;
-      let xPosition = e.x;
+      let yPosition = e.pageY;
+      let xPosition = e.pageX;
 
       // Checking for overflow for the borwser
       // Checking if the edit form widow overflowing the browser width
