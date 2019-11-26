@@ -378,3 +378,16 @@ Array.from(colorsAddFrom.querySelectorAll('div')).forEach((ele, index) => {
     ele.classList.add(colorsSelectedClass);
   });
 });
+
+// Events for adding items from table
+// I loop over the whole table just for the index of the element
+Array.from(document.querySelectorAll('tr')).forEach((tr, trIndex) => {
+  Array.from(tr.querySelectorAll('td')).forEach((td, tdIndex) => {
+    if (tdIndex === 0) return;
+    td.addEventListener('click', e => {
+      e.stopPropagation();
+
+      alert(`The table row is ${trIndex} and the table data is ${tdIndex}`);
+    });
+  });
+});
