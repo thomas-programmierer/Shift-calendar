@@ -134,7 +134,8 @@ main {
     flex-direction: column;
   }
 
-  #edit-form {
+  #edit-form,
+  #add-pop-up {
     width: 300px;
     left: 50% !important;
     -webkit-transform: translateX(-50%);
@@ -142,6 +143,10 @@ main {
     transform: translateX(-50%);
     -webkit-animation: fromLeftRespnisve 0.2s ease-in-out;
     animation: fromLeftRespnisve 0.2s ease-in-out;
+  }
+
+  #add-pop-up {
+    width: 200px;
   }
 
   @-webkit-keyframes fromLeftRespnisve {

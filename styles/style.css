@@ -4,6 +4,7 @@
         .overlay: 999
         .td .shift: 1
         #edit-form: 2
+        #add-pop-up: 2
 */
 :root {
   --black-color: #2b4353;
@@ -25,6 +26,7 @@
     rgb(211, 67, 38)
   );
   --link-color: #2f7ea3;
+  --pop-ups-box-shoadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
 html {
@@ -436,14 +438,14 @@ table tbody td:not(:first-child) {
 
 .colors {
   display: inline-block;
-  margin: 1rem;
+  margin: 0 1rem;
   vertical-align: middle;
 }
 
 .colors div {
   width: 32px;
   height: 32px;
-  margin-right: 20px;
+  margin: 1rem 20px 1rem 0;
   cursor: pointer;
 
   /* Outline style */
@@ -465,8 +467,8 @@ table tbody td:not(:first-child) {
   left: 0;
   border-radius: 10px;
   padding: 1rem;
-  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: var(--pop-ups-box-shoadow);
+  box-shadow: var(--pop-ups-box-shoadow);
   display: none;
   -webkit-animation: fromLeft 0.2s ease-in-out;
   animation: fromLeft 0.2s ease-in-out;
@@ -580,4 +582,26 @@ table tbody td:not(:first-child) {
   float: right;
   margin: 1rem 0;
   border-radius: 0;
+}
+
+/* Pop up add menu */
+#add-pop-up {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: 100px;
+  left: 100px;
+  padding: 0 1rem;
+  min-width: 150px;
+  background: var(--white-color);
+  box-shadow: var(--pop-ups-box-shoadow);
+  -webkit-animation: opacityAnimation 0.2s;
+  animation: opacityAnimation 0.2s;
+}
+
+#add-pop-up button {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+  border-radius: 10px;
 }

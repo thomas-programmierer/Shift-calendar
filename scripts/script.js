@@ -47,6 +47,12 @@ let currentId = 0;
 // So we can do things with it later like delete it or extend it
 let selectedShift;
 
+// Add popup element
+const addPopup = document.getElementById('add-pop-up');
+
+// Add popup row and column - We use it for intalizng the values for add form
+let addPopupCol, addPopupRow;
+
 // An IIFE that intalize the values from local storage
 (() => {
   // Adding colors to add menu first
@@ -219,7 +225,7 @@ function selectShift(e) {
     selectedShift = target.parentNode;
   else return;
 
-  editForm.style.display = 'block';
+  showEditForm();
 
   // Adding the values for the edit form so it became easier to edit them
   editForm.editName.value = selectedShift.querySelector('.name').textContent;
@@ -283,18 +289,55 @@ function removeShift() {
   }
 }
 
+// functions for hiding things (preferred to use)
+const hideEditForm = () => {
+  editForm.style.display = 'none';
+};
+
+const hideAddMenu = () => {
+  addMenu.style.display = 'none';
+};
+
+const hideAddPopup = () => {
+  addPopup.style.display = 'none';
+};
+
+const hideAllPopups = () => {
+  hideEditForm();
+  hideAddPopup();
+};
+
+/*
+  functions for showing things (preferred to use)
+  The function does hide the other pop ups
+*/
+
+const showAddPopup = () => {
+  addPopup.style.display = 'block';
+  hideEditForm();
+};
+
+const showEditForm = () => {
+  editForm.style.display = 'block';
+  hideAddPopup();
+};
+
+const showAddMenu = () => {
+  addMenu.style.display = 'flex';
+  hideAllPopups();
+};
+
 // Events
 // Event to add button
 document.getElementById('add').addEventListener('click', () => {
   // Hiding edit form if it shown and displying the add menu
-  editForm.style.display = 'none';
-  addMenu.style.display = 'flex';
+  showAddMenu();
 });
 
 // Event for cancel button
 document.getElementById('cancel-add').addEventListener('click', e => {
   e.preventDefault();
-  addMenu.style.display = 'none';
+  hideAddMenu();
 
   // Emptying the values
   emptyAddFromValues();
@@ -306,7 +349,7 @@ addForm.addEventListener('submit', addShift);
 // Event for removing all shifts
 document.getElementById('removeShifts').addEventListener('click', () => {
   // Hiding the edit form if it is displayed
-  editForm.style.display = 'none';
+  hideAllPopups();
 
   // Just to be sure it is not a miss click
   if (!confirm('Are you sure')) return;
@@ -322,14 +365,14 @@ table.addEventListener('click', selectShift);
 // Event for hiding the edit form
 document.getElementById('cancel-edit').addEventListener('click', e => {
   e.preventDefault();
-  editForm.style.display = 'none';
+  hideEditForm();
 });
 
 // Event for when clicking on remove on edit form
 document.getElementById('delete-shift').addEventListener('click', e => {
   // So it does not go to any link and scroll up to top
   e.preventDefault();
-  editForm.style.display = 'none';
+  hideEditForm();
   removeShift();
 });
 
@@ -355,7 +398,7 @@ editForm.addEventListener('submit', e => {
   } else {
     // Removing the shift from the node and hiding the edit form
     selectedShift.remove();
-    editForm.style.display = 'none';
+    hideEditForm();
 
     // Showing the new shifts
     convertShiftToNewNode(shifts[shiftIndex]);
@@ -383,11 +426,55 @@ Array.from(colorsAddFrom.querySelectorAll('div')).forEach((ele, index) => {
 // I loop over the whole table just for the index of the element
 Array.from(document.querySelectorAll('tr')).forEach((tr, trIndex) => {
   Array.from(tr.querySelectorAll('td')).forEach((td, tdIndex) => {
+    // The index at 0 is the time
     if (tdIndex === 0) return;
     td.addEventListener('click', e => {
-      e.stopPropagation();
+      // Checking for tag name
+      if (e.target.tagName.toLowerCase() === 'td') {
+        // Hiding the edit form and stopping propagation
+        hideEditForm();
+        e.stopPropagation();
+      } else return;
 
-      alert(`The table row is ${trIndex} and the table data is ${tdIndex}`);
+      // Show the add pop up and styling the position
+      showAddPopup();
+      let yPosition = e.y;
+      let xPosition = e.x;
+
+      // Checking for overflow for the borwser
+      // Checking if the edit form widow overflowing the browser width
+      const addPopUpWidth = parseInt(addPopup.offsetWidth);
+      if (xPosition + addPopUpWidth > document.body.offsetWidth)
+        xPosition -= addPopUpWidth;
+
+      // Now for y-axe
+      const addPopupHeight = parseInt(addPopup.offsetHeight);
+      if (yPosition + addPopupHeight > document.body.offsetHeight) {
+        yPosition -= 50;
+      }
+
+      // Applying the position
+      addPopup.style.top = yPosition + 'px';
+      addPopup.style.left = xPosition + 'px';
+
+      // Intalinzing the values
+      addPopupRow = trIndex;
+      addPopupCol = tdIndex;
     });
   });
 });
+
+// Adding event for add-popup add button
+document.getElementById('show-add-menu').addEventListener('click', () => {
+  // Showing the add menu
+  showAddMenu();
+
+  // Intalinzing the values
+  addForm.day.value = addPopupCol;
+  addForm.hour.value = addPopupRow;
+});
+
+// An event for hiding the add pop up
+document
+  .getElementById('cancel-add-popup')
+  .addEventListener('click', hideAddPopup);
