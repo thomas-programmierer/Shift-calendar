@@ -273,7 +273,6 @@ function findShiftIndex(shiftId) {
 // An array to find the item with binary search algorithm
 function binarySearch(shiftId, arr = shifts) {
   if (arr.length === 0) return;
-  else if (arr[0].id == shiftId) return arr[0];
 
   const middlePoint = Math.floor(arr.length / 2);
   if (arr[middlePoint].id == shiftId) return arr[middlePoint];
