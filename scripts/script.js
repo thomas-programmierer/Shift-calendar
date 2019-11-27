@@ -266,8 +266,19 @@ function selectShift(e) {
 }
 
 // A function just to find a shift index in the array shifts based on Id
-function findShift(shiftId) {
+function findShiftIndex(shiftId) {
   return shifts.findIndex(ele => shiftId == ele.id);
+}
+
+// An array to find the item with binary search
+function binarySearch(shiftId, arr = shifts) {
+  if (arr.length === 0) return -1;
+
+  const middlePoint = arr.length / 2;
+  if (arr[middlePoint] === shiftId) return arr[middlePoint];
+  else if (arr[middlePoint] > shiftId)
+    return binarySearch(shiftId, arr.slice(0, middlePoint));
+  else return binarySearch(shiftId, arr.slice(middlePoint));
 }
 
 function removeShift() {
@@ -275,7 +286,7 @@ function removeShift() {
   if (confirm('Are you sure??')) {
     // Getting the index of the shift that wanted to be deleted
     const targetID = selectedShift.getAttribute('shift-id');
-    const targetIndex = findShift(targetID);
+    const targetIndex = findShiftIndex(targetID);
 
     // Checking that the shift is found
     if (targetIndex != -1) {
@@ -381,19 +392,19 @@ editForm.addEventListener('submit', e => {
 
   // Finding the shifts
   const selectedShiftId = selectedShift.getAttribute('shift-id');
-  const shiftIndex = findShift(selectedShiftId);
+  const shiftTarget = binarySearch(selectedShiftId);
 
   // This is a variable just to check if there is already a shift when the new extending time
   // If there is it will save the new name and description but not the new extend time
-  const oldExtendTime = shifts[shiftIndex].extendTime;
+  const oldExtendTime = shiftTarget.extendTime;
 
   // Changing the value
-  shifts[shiftIndex].name = editForm.editName.value;
-  shifts[shiftIndex].description = editForm.editDescription.value;
-  shifts[shiftIndex].extendTime = parseInt(editForm.extendTime.value);
+  shiftTarget.name = editForm.editName.value;
+  shiftTarget.description = editForm.editDescription.value;
+  shiftTarget.extendTime = parseInt(editForm.extendTime.value);
 
-  if (shiftExist(shifts[shiftIndex])) {
-    shifts[shiftIndex].extendTime = oldExtendTime;
+  if (shiftExist(shiftTarget)) {
+    shiftTarget.extendTime = oldExtendTime;
     return;
   } else {
     // Removing the shift from the node and hiding the edit form
@@ -401,7 +412,7 @@ editForm.addEventListener('submit', e => {
     hideEditForm();
 
     // Showing the new shifts
-    convertShiftToNewNode(shifts[shiftIndex]);
+    convertShiftToNewNode(shiftTarget);
 
     // Saving changes
     saveToLocalStorage();
