@@ -270,13 +270,14 @@ function findShiftIndex(shiftId) {
   return shifts.findIndex(ele => shiftId == ele.id);
 }
 
-// An array to find the item with binary search
+// An array to find the item with binary search algorithm
 function binarySearch(shiftId, arr = shifts) {
-  if (arr.length === 0) return -1;
+  if (arr.length === 0) return;
+  else if (arr[0].id == shiftId) return arr[0];
 
-  const middlePoint = arr.length / 2;
-  if (arr[middlePoint] === shiftId) return arr[middlePoint];
-  else if (arr[middlePoint] > shiftId)
+  const middlePoint = Math.floor(arr.length / 2);
+  if (arr[middlePoint].id == shiftId) return arr[middlePoint];
+  else if (arr[middlePoint].id > shiftId)
     return binarySearch(shiftId, arr.slice(0, middlePoint));
   else return binarySearch(shiftId, arr.slice(middlePoint));
 }
