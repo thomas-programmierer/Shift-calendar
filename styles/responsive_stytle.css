@@ -45,6 +45,10 @@ main {
     margin-top: 1rem;
   }
 
+  td .shift .description {
+    font-size: 1.1rem;
+  }
+
   td:nth-of-type(2):before {
     content: 'Monday';
   }
@@ -123,6 +127,10 @@ main {
 }
 
 @media (max-width: 500px) {
+  .opacity-hover-effect {
+    opacity: 0.9;
+  }
+
   nav ul {
     margin-top: 1rem;
   }

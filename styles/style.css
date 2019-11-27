@@ -87,6 +87,20 @@ a {
   padding-bottom: 0.1rem;
 }
 
+/* Animation ultilites */
+.opacity-hover-effect {
+  opacity: 0.82;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.opacity-hover-effect:hover,
+.opacity-hover-effect:focus,
+.opacity-hover-effect:focus-within {
+  opacity: 1;
+}
+
 /* Ultilites */
 .container {
   max-width: 1100px;
@@ -170,12 +184,26 @@ a {
 }
 
 .green-gradient {
-  background: -webkit-linear-gradient(to right bottom, #38a057, #3ca55c);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#38a057),
+    to(#3ca55c)
+  );
+  background: -o-linear-gradient(left top, #38a057, #3ca55c);
   background: linear-gradient(to right bottom, #38a057, #3ca55c);
 }
 
 .purple-gradient {
-  background: -webkit-linear-gradient(to right bottom, #b06ab3, #b165b4);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#b06ab3),
+    to(#b165b4)
+  );
+  background: -o-linear-gradient(left top, #b06ab3, #b165b4);
   background: linear-gradient(to right bottom, #b06ab3, #b165b4);
 }
 
@@ -233,6 +261,7 @@ button:hover,
 /* Nav */
 
 header {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 99;
@@ -351,29 +380,35 @@ td .shift {
   }
 }
 
-td .shift::-webkit-scrollbar {
+td .shift::-webkit-scrollbar,
+td .shift .description::-webkit-scrollbar {
   width: 6px;
   margin: 1rem 0;
 }
 
-td .shift::-webkit-scrollbar-track {
+td .shift::-webkit-scrollbar-track,
+td .shift .description::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
 }
 
-td .shift::-webkit-scrollbar-thumb {
+td .shift::-webkit-scrollbar-thumb,
+td .shift .description:-webkit-scrollbar-thumb {
   border-radius: 5px;
   background: var(--dark-white);
 }
 
 td .shift .name {
   font-size: 1.5rem;
+  margin-top: 2px;
 }
 
 td .shift .description {
   font-size: 1rem;
   margin-top: 0.5rem;
   color: var(--dark-white);
+  max-height: 80%;
+  overflow-y: auto;
 }
 
 td .shift .endtime {
@@ -594,7 +629,9 @@ table tbody td:not(:first-child) {
   padding: 0 1rem;
   min-width: 150px;
   background: var(--white-color);
+  -webkit-box-shadow: var(--pop-ups-box-shoadow);
   box-shadow: var(--pop-ups-box-shoadow);
+  border-radius: 10px;
   -webkit-animation: opacityAnimation 0.2s;
   animation: opacityAnimation 0.2s;
 }
