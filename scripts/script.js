@@ -270,7 +270,7 @@ function findShiftIndex(shiftId) {
   return shifts.findIndex(ele => shiftId == ele.id);
 }
 
-// An array to find the item with binary search algorithm
+// A function to find the item with binary search algorithm
 function binarySearch(shiftId, arr = shifts) {
   if (arr.length === 0) return;
 
