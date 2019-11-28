@@ -107,6 +107,11 @@ main {
     text-align: center;
     padding-top: 1rem;
   }
+
+  #tutorial .content {
+    max-height: 96vh;
+    max-width: 96vw;
+  }
 }
 
 @media (max-width: 600px) {
