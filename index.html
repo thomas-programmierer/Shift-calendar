@@ -31,8 +31,22 @@
       <div class="container">
         <a href="index.html" class="brand">Shifts Calendar <i class="far fa-calendar-alt"></i></a>
         <ul>
-          <li><button id="add" class="btn-secondary">Add a shift <i class="fas fa-plus"></i></button></li>
-          <li><button id="removeShifts" class="btn-white">Remove all shifts <i class="far fa-trash-alt"></i></button>
+          <li>
+            <div id="log" title="See log">
+              <i class="far fa-file-alt"></i>
+              <div id="log-window">
+                <div class="head">
+                  Log
+                </div>
+                <div class="body"></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div title="add an item" id="add"><i class="fas fa-plus"></i></div>
+          </li>
+          <li>
+            <div title="Remove all items" id="removeShifts"><i class="far fa-trash-alt"></i></div>
           </li>
         </ul>
       </div>

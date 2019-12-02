@@ -53,6 +53,10 @@ const addPopup = document.getElementById('add-pop-up');
 // Add popup row and column - We use it for intalizng the values for add form
 let addPopupCol, addPopupRow;
 
+// The log window where we add everything we did on it
+const logWindow = document.getElementById('log-window');
+let logShown = false;
+
 // An IIFE that intalize the values from local storage
 (() => {
   // Adding colors to add menu first
@@ -425,7 +429,7 @@ Array.from(colorsAddFrom.querySelectorAll('div')).forEach((ele, index) => {
     // First removing the old selected shift
     colorsAddFrom
       .querySelectorAll('div')
-      [colorSelectedIndex].classList.remove(colorsSelectedClass);
+    [colorSelectedIndex].classList.remove(colorsSelectedClass);
 
     // And regestring the new index for future processing
     colorSelectedIndex = index;
@@ -489,3 +493,10 @@ document.getElementById('show-add-menu').addEventListener('click', () => {
 document
   .getElementById('cancel-add-popup')
   .addEventListener('click', hideAddPopup);
+
+// Event for showing and hiding log
+document.getElementById('log').addEventListener('click', () => {
+  if (logShown) logWindow.style.display = 'block';
+  else logWindow.style.display = 'none';
+  logShown = !logShown;
+});

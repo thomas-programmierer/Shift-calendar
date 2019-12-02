@@ -5,6 +5,7 @@
         .td .shift: 1
         #edit-form: 2
         #add-pop-up: 2
+        #log-window: 1
 */
 :root {
   --black-color: #2b4353;
@@ -13,6 +14,7 @@
   --dark-white: rgb(240, 240, 240);
   --darker-white: rgb(195, 195, 195);
   --primary-color: #004d61;
+  --dark-primary: #042e38;
   --secondary-color: #ff502f;
   --low-opacity-primary-color: #004e6131;
   --gradient-primary: linear-gradient(
@@ -266,6 +268,7 @@ header {
   top: 0;
   z-index: 99;
 }
+
 nav {
   background: var(--primary-color);
   color: var(--white-color);
@@ -298,6 +301,73 @@ nav .brand {
 nav ul li {
   display: inline-block;
   margin: 0.5rem 0.5rem;
+  height: 3.4rem;
+  width: 3.4rem;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 3.4rem;
+  border: 3px solid var(--dark-primary);
+  cursor: pointer;
+  transition: all .4s ease-in-out;
+  position: relative;
+}
+
+#log-window {
+  text-align: left;
+  position: absolute;
+  top: 110%;
+  left: -10px;
+  z-index: 1;
+  background: var(--white-color);
+  width: 20rem;
+  height: 30rem;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  animation: opacityAnimation 0.1s ease-in-out;
+  display: none;
+  color: var(--black-color);
+}
+
+#log-window::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 16px;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 16px solid var(--darker-white);
+}
+
+#log-window .head {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5rem;
+  line-height: 5rem;
+  padding: 0 1rem;
+  background: var(--darker-white);
+  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+#log-window .body {
+  overflow-y: auto;
+  height: 25rem;
+  padding: 0 1rem;
+}
+
+nav ul li:hover {
+  background: var(--white-color);
+  border-color: var(--white-color);
+  color: var(--black-color);
+  transform: translateY(-2px);
+}
+
+nav ul li:active {
+  transform: translateY(0);
 }
 
 /* table styling */
