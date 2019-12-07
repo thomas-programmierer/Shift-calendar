@@ -335,7 +335,7 @@ nav ul li {
   left: 16px;
   border-left: 16px solid transparent;
   border-right: 16px solid transparent;
-  border-bottom: 16px solid var(--darker-white);
+  border-bottom: 16px solid rgb(240, 240, 240);
 }
 
 #log-window .head {
@@ -346,17 +346,28 @@ nav ul li {
   height: 5rem;
   line-height: 5rem;
   padding: 0 1rem;
-  background: var(--darker-white);
+  background: rgb(240, 240, 240);
   color: var(--primary-color);
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  cursor: default;
 }
 
 #log-window .body {
+  cursor: default;
   overflow-y: auto;
   height: 25rem;
-  padding: 0 1rem;
+}
+
+#log-window .body > div {
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+#log-window .body > div:nth-child(even) {
+  background: var(--dark-white);
 }
 
 nav ul li:hover {
@@ -650,6 +661,12 @@ table tbody td:not(:first-child) {
   max-height: 800px;
   overflow-y: auto;
   background: var(--white-color);
+}
+
+@media (max-height: 800px) {
+  #tutorial .content {
+    max-height: 600px;
+  }
 }
 
 #tutorial .content::-webkit-scrollbar {

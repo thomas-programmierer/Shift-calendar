@@ -57,6 +57,16 @@ let addPopupCol, addPopupRow;
 const logWindow = document.getElementById('log-window');
 let logShown = false;
 
+const logBody = logWindow.querySelector('.body');
+
+// Log types so it becames easier to add them
+const logTypes = {
+  add: 'ADD',
+  edit: 'EDIT',
+  delete: 'DELETE',
+  deleteAll: 'DELETEALL'
+};
+
 // An IIFE that intalize the values from local storage
 (() => {
   // Adding colors to add menu first
@@ -70,6 +80,7 @@ let logShown = false;
   const values = JSON.parse(localStorage.getItem('shifts'));
   if (values) {
     shifts = values;
+    logBody.innerHTML = localStorage.getItem('logs');
   } else return;
 
   // Adding all shifts to the table
@@ -141,6 +152,7 @@ const emptyAddFromValues = () => {
 // A function that save shifts array to the local storage
 const saveToLocalStorage = () => {
   localStorage.setItem('shifts', JSON.stringify(shifts));
+  localStorage.setItem('logs', logBody.innerHTML);
 };
 
 function shiftExist(newShift) {
@@ -166,6 +178,28 @@ function shiftExist(newShift) {
   return false;
 }
 
+// A function for adding item to the log
+const addToLog = (name = '', type) => {
+  let addHTML = `<div>`;
+  switch (type) {
+    case 'ADD':
+      addHTML += `The shift <i>${name}</i> has been been added`;
+      break;
+    case 'EDIT':
+      addHTML += `The shift <i>${name}</i> has been changed.`;
+      break;
+    case 'DELETE':
+      addHTML += `The shift <i>${name}</i> has been deleted`;
+      break;
+    case 'DELETEALL':
+      addHTML += 'All shift have been deleted!!';
+      break;
+  }
+
+  addHTML += '</div>';
+  logBody.innerHTML = addHTML + logBody.innerHTML;
+};
+
 // A function that add the shift to the table and to the array
 const addShift = e => {
   e.preventDefault();
@@ -182,6 +216,9 @@ const addShift = e => {
   );
 
   if (shiftExist(newShift)) return;
+
+  // Adding the item to the log
+  addToLog(addForm.name.value, logTypes.add);
 
   // Adding the shift to the array and saving it to the local storage
   shifts.push(newShift);
@@ -255,13 +292,12 @@ function selectShift(e) {
   // Checking if the edit form widow overflowing the browser width
   const editFormWidth = parseInt(editForm.offsetWidth);
   if (mouse.x + editFormWidth > document.body.offsetWidth)
-    xPosition -= editFormWidth;
+    xPosition -= (mouse.x + editFormWidth) - document.body.offsetWidth;
 
   // Now for y-axe
   const editFormHeight = parseInt(editForm.offsetWidth);
   if (mouse.y + editFormHeight > document.body.offsetHeight) {
-    // We added 74px because it is not too much up and not too much down with the full height and with that it will be on the middle
-    yPosition -= editFormHeight + 74;
+    yPosition -= (mouse.y + editFormHeight) - document.body.offsetHeight + 80;
   }
 
   // Applying the position
@@ -294,6 +330,7 @@ function removeShift() {
 
     // Checking that the shift is found
     if (targetIndex != -1) {
+      addToLog(shifts[targetIndex].name, logTypes.delete);
       shifts.splice(targetIndex, 1);
       saveToLocalStorage();
       selectedShift.remove();
@@ -317,9 +354,14 @@ const hideAddPopup = () => {
   addPopup.style.display = 'none';
 };
 
+const hideLogWindow = () => {
+  logWindow.style.display = 'none';
+};
+
 const hideAllPopups = () => {
   hideEditForm();
   hideAddPopup();
+  hideLogWindow();
 };
 
 /*
@@ -330,16 +372,24 @@ const hideAllPopups = () => {
 const showAddPopup = () => {
   addPopup.style.display = 'block';
   hideEditForm();
+  hideLogWindow();
 };
 
 const showEditForm = () => {
   editForm.style.display = 'block';
   hideAddPopup();
+  hideLogWindow();
 };
 
+const showLog = () => {
+  hideAddPopup();
+  hideEditForm();
+  logWindow.style.display = 'block';
+}
+
 const showAddMenu = () => {
-  addMenu.style.display = 'flex';
   hideAllPopups();
+  addMenu.style.display = 'flex';
 };
 
 // Events
@@ -368,6 +418,8 @@ document.getElementById('removeShifts').addEventListener('click', () => {
 
   // Just to be sure it is not a miss click
   if (!confirm('Are you sure')) return;
+
+  addToLog(undefined, logTypes.deleteAll);
 
   shifts = [];
   saveToLocalStorage();
@@ -402,10 +454,12 @@ editForm.addEventListener('submit', e => {
   // If there is it will save the new name and description but not the new extend time
   const oldExtendTime = shiftTarget.extendTime;
 
+  addToLog(shiftTarget.name, logTypes.edit)
   // Changing the value
   shiftTarget.name = editForm.editName.value;
   shiftTarget.description = editForm.editDescription.value;
   shiftTarget.extendTime = parseInt(editForm.extendTime.value);
+
 
   if (shiftExist(shiftTarget)) {
     shiftTarget.extendTime = oldExtendTime;
@@ -457,15 +511,14 @@ Array.from(document.querySelectorAll('tr')).forEach((tr, trIndex) => {
       let xPosition = e.pageX;
 
       // Checking for overflow for the borwser
-      // Checking if the edit form widow overflowing the browser width
       const addPopUpWidth = parseInt(addPopup.offsetWidth);
       if (xPosition + addPopUpWidth > document.body.offsetWidth)
-        xPosition -= addPopUpWidth;
+        xPosition -= (xPosition + addPopUpWidth) - document.body.offsetWidth;
 
       // Now for y-axe
       const addPopupHeight = parseInt(addPopup.offsetHeight);
       if (yPosition + addPopupHeight > document.body.offsetHeight) {
-        yPosition -= 50;
+        yPosition -= (yPosition + addPopupHeight) - document.body.offsetHeight;
       }
 
       // Applying the position
@@ -496,7 +549,7 @@ document
 
 // Event for showing and hiding log
 document.getElementById('log').addEventListener('click', () => {
-  if (logShown) logWindow.style.display = 'block';
-  else logWindow.style.display = 'none';
+  if (logShown) showLog();
+  else hideLogWindow();
   logShown = !logShown;
 });
