@@ -1,5 +1,5 @@
 /* 
-    - COLOR VALUES HENTED FROM: https://colorhunt.co/palette/147323
+    - COLOR VALUES HENTED FROM: https://flatuicolors.com/palette/defo
     - Z-index values:
         .overlay: 999
         .td .shift: 1
@@ -8,24 +8,24 @@
         #log-window: 1
 */
 :root {
-  --black-color: #2b4353;
+  --black-color: #2c3e50;
   --white-color: #fff;
   --light-dark-white: rgb(240, 240, 240);
   --dark-white: rgb(240, 240, 240);
   --darker-white: rgb(195, 195, 195);
-  --primary-color: #004d61;
-  --dark-primary: #042e38;
-  --secondary-color: #ff502f;
-  --low-opacity-primary-color: #004e6131;
+  --primary-color: #8e44ad;
+  --dark-primary: #6e3586;
+  --secondary-color: #2980b9;
+  --low-opacity-primary-color: rgba(141, 68, 173, 0.1);
   --gradient-primary: linear-gradient(
-    to right bottom,
-    rgb(0, 94, 117),
-    rgb(0, 114, 143)
+    to bottom,
+    #9b59b6,
+    #8e44ad
   );
   --gradient-secondary: linear-gradient(
     to right bottom,
-    rgb(255, 80, 47),
-    rgb(211, 67, 38)
+    #3498db,
+    #2980b9
   );
   --link-color: #2f7ea3;
   --pop-ups-box-shoadow: 0 0 15px rgba(0, 0, 0, 0.4);
@@ -174,39 +174,15 @@ a {
 
 /* Other gradient */
 .red-gradient {
-  background: -o-linear-gradient(left top, #ff3636, #ff2020);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(#ff3636),
-    to(#ff2020)
-  );
-  background: linear-gradient(to right bottom, #ff3636, #ff2020);
+  background: #e74c3c
 }
 
 .green-gradient {
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(#38a057),
-    to(#3ca55c)
-  );
-  background: -o-linear-gradient(left top, #38a057, #3ca55c);
-  background: linear-gradient(to right bottom, #38a057, #3ca55c);
+  background: #2ecc71;
 }
 
-.purple-gradient {
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(#b06ab3),
-    to(#b165b4)
-  );
-  background: -o-linear-gradient(left top, #b06ab3, #b165b4);
-  background: linear-gradient(to right bottom, #b06ab3, #b165b4);
+.orange-gradient {
+  background: #e67e22;
 }
 
 .thick-line {
@@ -219,7 +195,6 @@ a {
 
 button,
 .btn {
-  border-radius: 5px;
   font-size: 1.2rem;
   padding: 0.8rem 1.6rem;
   background: none;
@@ -304,10 +279,8 @@ nav ul li {
   height: 3.4rem;
   width: 3.4rem;
   font-size: 1.5rem;
-  border-radius: 50%;
   text-align: center;
   line-height: 3.4rem;
-  border: 3px solid var(--dark-primary);
   cursor: pointer;
   transition: all .4s ease-in-out;
   position: relative;
@@ -394,7 +367,7 @@ td {
   position: relative;
 }
 
-td:not(:first-child) {
+td {
   border: 0.1px solid var(--low-opacity-primary-color);
 }
 
@@ -403,12 +376,11 @@ td .shift {
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
-  border-radius: 5px;
   position: absolute;
   height: 90px;
-  width: 80%;
+  width: 98%;
   word-break: break-all;
-  top: 5px;
+  top: 4px;
   left: 50%;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
@@ -431,6 +403,10 @@ td .shift {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+}
+
+td .shift .time {
+  color: var(--white-color);
 }
 
 @-webkit-keyframes shiftAnimation {
@@ -461,6 +437,14 @@ td .shift {
   }
 }
 
+td .time {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 12px;
+  color: rgb(170, 170, 170);
+}
+
 td .shift::-webkit-scrollbar,
 td .shift .description::-webkit-scrollbar {
   width: 6px;
@@ -470,7 +454,6 @@ td .shift .description::-webkit-scrollbar {
 td .shift::-webkit-scrollbar-track,
 td .shift .description::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
 }
 
 td .shift::-webkit-scrollbar-thumb,
@@ -510,16 +493,11 @@ th {
   max-height: 100px;
 }
 
-table thead th,
-table tbody td:first-child {
-  background: var(--secondary-color);
-  color: var(--white-color);
+table thead th {
+  background: #e4e9eb;
+  color: #34495e;
 }
 
-table thead th:first-child,
-table tbody td:first-child {
-  min-width: 5%;
-}
 
 table tbody tr {
   -webkit-transition: background 0.2s;
@@ -527,19 +505,11 @@ table tbody tr {
   transition: background 0.2s;
 }
 
-table tbody tr:nth-child(even) {
+table tbody tr:hover {
   background: var(--dark-white);
 }
 
-table tbody tr:hover {
-  background: var(--light-dark-white);
-}
-
-table tbody tr:nth-child(even):hover {
-  background: var(--darker-white);
-}
-
-table tbody td:not(:first-child) {
+table tbody td{
   cursor: pointer;
 }
 
@@ -581,7 +551,6 @@ table tbody td:not(:first-child) {
   z-index: 2;
   top: 0;
   left: 0;
-  border-radius: 10px;
   padding: 1rem;
   -webkit-box-shadow: var(--pop-ups-box-shoadow);
   box-shadow: var(--pop-ups-box-shoadow);
@@ -703,7 +672,6 @@ table tbody td:not(:first-child) {
   clear: both;
   float: right;
   margin: 1rem 0;
-  border-radius: 0;
 }
 
 /* Pop up add menu */
@@ -718,7 +686,6 @@ table tbody td:not(:first-child) {
   background: var(--white-color);
   -webkit-box-shadow: var(--pop-ups-box-shoadow);
   box-shadow: var(--pop-ups-box-shoadow);
-  border-radius: 10px;
   -webkit-animation: opacityAnimation 0.2s;
   animation: opacityAnimation 0.2s;
 }
@@ -727,5 +694,4 @@ table tbody td:not(:first-child) {
   display: block;
   width: 100%;
   margin: 1rem 0;
-  border-radius: 10px;
 }

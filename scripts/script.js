@@ -26,7 +26,7 @@ const tableRows = Array.from(document.querySelectorAll('table tr'));
 const shiftHeight = 100;
 
 // The padding for the shift - we need this to make some spaces between top and bottom border
-const shiftPadding = 10;
+const shiftPadding = 4;
 
 // Css classes for shift backgrounds color
 const shiftColors = [
@@ -58,6 +58,9 @@ const logWindow = document.getElementById('log-window');
 let logShown = false;
 
 const logBody = logWindow.querySelector('.body');
+
+// Start time for the shifts
+const startTime = 7;
 
 // Log types so it becames easier to add them
 const logTypes = {
@@ -102,11 +105,15 @@ function getAddString(name, description, hour, extend = 0, id, shiftColor) {
   let height = (extend + 1) * shiftHeight;
   height -= shiftPadding;
 
+
+  const addTime = covnertToTime(hour + startTime - 1);
+
   // Getting the color
   const color = shiftColor;
 
   // We return the value as a template string because there is many variables we need to use
   let result = `<div class="shift ${color}" style="height: ${height}px" shift-id="${id}">
+    ${addTime}
         <div class="name">${name}</div>`;
 
   // The description is not required to add A shift so we check before we add the shift
@@ -305,20 +312,22 @@ function selectShift(e) {
   editForm.style.left = xPosition + 'px';
 }
 
-// A function just to find a shift index in the array shifts based on Id
-function findShiftIndex(shiftId) {
-  return shifts.findIndex(ele => shiftId == ele.id);
-}
-
-// A function to find the item with binary search algorithm
 function binarySearch(shiftId, arr = shifts) {
-  if (arr.length === 0) return;
+  let low = 0;
+  let high = arr.length;
 
-  const middlePoint = Math.floor(arr.length / 2);
-  if (arr[middlePoint].id == shiftId) return arr[middlePoint];
-  else if (arr[middlePoint].id > shiftId)
-    return binarySearch(shiftId, arr.slice(0, middlePoint));
-  else return binarySearch(shiftId, arr.slice(middlePoint));
+  while (low <= high) {
+    const middle = Math.floor((low + high) / 2);
+    const middleElement = arr[middle].id;
+    if (middleElement == shiftId) {
+      return middle;
+    } else if (middleElement > shiftId) {
+      high = middle - 1;
+    } else {
+      low = middle + 1;
+    }
+  }
+  return -1;
 }
 
 function removeShift() {
@@ -326,7 +335,7 @@ function removeShift() {
   if (confirm('Are you sure??')) {
     // Getting the index of the shift that wanted to be deleted
     const targetID = selectedShift.getAttribute('shift-id');
-    const targetIndex = findShiftIndex(targetID);
+    const targetIndex = binarySearch(targetID);
 
     // Checking that the shift is found
     if (targetIndex != -1) {
@@ -392,6 +401,15 @@ const showAddMenu = () => {
   addMenu.style.display = 'flex';
 };
 
+// Function for converting the 24-time to AM and PM
+function covnertToTime(time) {
+  if (time > 12) {
+    return `<span class="time">${time - 12}PM</span>`;
+  } else {
+    return `<span class="time">${time}AM</span>`;
+  }
+}
+
 // Events
 // Event to add button
 document.getElementById('add').addEventListener('click', () => {
@@ -422,6 +440,7 @@ document.getElementById('removeShifts').addEventListener('click', () => {
   addToLog(undefined, logTypes.deleteAll);
 
   shifts = [];
+  currentId = 0;
   saveToLocalStorage();
   Array.from(document.querySelectorAll('.shift')).forEach(ele => ele.remove());
 });
@@ -448,7 +467,8 @@ editForm.addEventListener('submit', e => {
 
   // Finding the shifts
   const selectedShiftId = selectedShift.getAttribute('shift-id');
-  const shiftTarget = binarySearch(selectedShiftId);
+  const shiftTargetIndex = binarySearch(selectedShiftId);
+  const shiftTarget = shifts[shiftTargetIndex];
 
   // This is a variable just to check if there is already a shift when the new extending time
   // If there is it will save the new name and description but not the new extend time
@@ -493,10 +513,11 @@ Array.from(colorsAddFrom.querySelectorAll('div')).forEach((ele, index) => {
 
 // Events for adding items from table
 // I loop over the whole table just for the index of the element
+let currentTime = startTime - 2;
 Array.from(document.querySelectorAll('tr')).forEach((tr, trIndex) => {
+  currentTime++;
   Array.from(tr.querySelectorAll('td')).forEach((td, tdIndex) => {
-    // The index at 0 is the time
-    if (tdIndex === 0) return;
+    td.innerHTML += covnertToTime(currentTime);
     td.addEventListener('click', e => {
       // Checking for tag name
       if (e.target.tagName.toLowerCase() === 'td') {
