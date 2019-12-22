@@ -34,7 +34,7 @@ const shiftColors = [
   'gradient-secondary',
   'red-gradient',
   'green-gradient',
-  'purple-gradient'
+  'orange-gradient'
 ];
 
 // A variable to hold all the shifts
