@@ -30,11 +30,11 @@ const shiftPadding = 4;
 
 // Css classes for shift backgrounds color
 const shiftColors = [
-  'gradient-primary',
-  'gradient-secondary',
-  'red-gradient',
-  'green-gradient',
-  'orange-gradient'
+  'primary',
+  'secondary',
+  'red',
+  'green',
+  'orange'
 ];
 
 // A variable to hold all the shifts
@@ -69,6 +69,9 @@ const logTypes = {
   delete: 'DELETE',
   deleteAll: 'DELETEALL'
 };
+
+// The check box to close the add form on save
+const closeOnSave = document.getElementById('close-on-save');
 
 // An IIFE that intalize the values from local storage
 (() => {
@@ -236,6 +239,10 @@ const addShift = e => {
 
   // Adding the shift to the table
   convertShiftToNewNode(newShift);
+
+  if (closeOnSave.checked) {
+    hideAddMenu();
+  }
 };
 
 // A function that get the shift of type class and add it to the table
@@ -373,6 +380,11 @@ const hideAllPopups = () => {
   hideLogWindow();
 };
 
+const hideAllOverlays = () => {
+  hideAllPopups();
+  hideAddMenu();
+}
+
 /*
   functions for showing things (preferred to use)
   The function does hide the other pop ups
@@ -446,7 +458,7 @@ document.getElementById('removeShifts').addEventListener('click', () => {
 });
 
 // We remove shifts on table click
-table.addEventListener('click', selectShift);
+table.addEventListener('mousedown', selectShift);
 
 // Event for hiding the edit form
 document.getElementById('cancel-edit').addEventListener('click', e => {
@@ -573,4 +585,26 @@ document.getElementById('log').addEventListener('click', () => {
   if (logShown) showLog();
   else hideLogWindow();
   logShown = !logShown;
+});
+
+// Event for keyboard shortcuts
+window.addEventListener('keydown', (e) => {
+  if (e.shiftKey) {
+    switch (e.keyCode) {
+      case 65:
+        showAddMenu();
+        break;
+      case 67:
+        if (logShown) {
+          hideLogWindow();
+        } else {
+          showLog();
+        }
+        logShown = !logShown;
+        break;
+    }
+  } else if (e.keyCode == 27) {
+    hideAllOverlays();
+  }
+  console.log(e.keyCode);
 });

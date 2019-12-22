@@ -12,21 +12,11 @@
   --white-color: #fff;
   --light-dark-white: rgb(240, 240, 240);
   --dark-white: rgb(240, 240, 240);
-  --darker-white: rgb(195, 195, 195);
+  --darker-white: rgb(205, 205, 205);
   --primary-color: #8e44ad;
   --dark-primary: #6e3586;
   --secondary-color: #2980b9;
   --low-opacity-primary-color: rgba(141, 68, 173, 0.1);
-  --gradient-primary: linear-gradient(
-    to bottom,
-    #9b59b6,
-    #8e44ad
-  );
-  --gradient-secondary: linear-gradient(
-    to right bottom,
-    #3498db,
-    #2980b9
-  );
   --link-color: #2f7ea3;
   --pop-ups-box-shoadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
@@ -89,6 +79,34 @@ a {
   padding-bottom: 0.1rem;
 }
 
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] ~ label {
+  cursor: pointer;
+  line-height: 1.2rem;
+}
+
+input[type="checkbox"] ~ label::before{
+  content: '✔';
+  display: inline-block;
+  color: transparent;
+  text-align: center;
+  border: 4px solid var(--black-color);
+  height: 1.2rem;
+  width: 1.2rem;
+  line-height: 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-right: 5px;
+  transition: color 0.2s ease;
+}
+
+input[type="checkbox"]:checked ~ label::before {
+  color: var(--black-color);
+}
+
 /* Animation ultilites */
 .opacity-hover-effect {
   opacity: 0.82;
@@ -108,6 +126,26 @@ a {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+.py-1  {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.py-2  {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.py-3  {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.py-4  {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
 
 .overlay {
@@ -164,24 +202,24 @@ a {
   font-size: 1.2rem;
 }
 
-.gradient-primary {
-  background: var(--gradient-primary);
+/* Colors for shifts */
+.primary {
+  background: var(--primary-color);
 }
 
-.gradient-secondary {
-  background: var(--gradient-secondary);
+.secondary {
+  background: var(--secondary-color);
 }
 
-/* Other gradient */
-.red-gradient {
+.red {
   background: #e74c3c
 }
 
-.green-gradient {
+.green {
   background: #2ecc71;
 }
 
-.orange-gradient {
+.orange {
   background: #e67e22;
 }
 
@@ -236,7 +274,6 @@ button:hover,
 }
 
 /* Nav */
-
 header {
   position: -webkit-sticky;
   position: sticky;
@@ -286,6 +323,7 @@ nav ul li {
   position: relative;
 }
 
+/* Log window */
 #log-window {
   text-align: left;
   position: absolute;
@@ -295,7 +333,7 @@ nav ul li {
   background: var(--white-color);
   width: 20rem;
   height: 30rem;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.4);
   animation: opacityAnimation 0.1s ease-in-out;
   display: none;
   color: var(--black-color);
@@ -304,11 +342,11 @@ nav ul li {
 #log-window::before {
   content: '';
   position: absolute;
-  top: -16px;
+  top: -12px;
   left: 16px;
   border-left: 16px solid transparent;
   border-right: 16px solid transparent;
-  border-bottom: 16px solid rgb(240, 240, 240);
+  border-bottom: 16px solid var(--primary-color);
 }
 
 #log-window .head {
@@ -319,11 +357,9 @@ nav ul li {
   height: 5rem;
   line-height: 5rem;
   padding: 0 1rem;
-  background: rgb(240, 240, 240);
-  color: var(--primary-color);
+  background: var(--primary-color);
+  color: var(--white-color);
   font-size: 1.5rem;
-  font-weight: 700;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
   cursor: default;
 }
 
@@ -340,7 +376,7 @@ nav ul li {
 }
 
 #log-window .body > div:nth-child(even) {
-  background: var(--dark-white);
+  background: rgb(250, 250, 250);
 }
 
 nav ul li:hover {
@@ -520,6 +556,10 @@ table tbody td{
 /* add-menu */
 #add-menu {
   display: none;
+}
+
+.close-on-save-container {
+  margin-bottom: 1rem;
 }
 
 .colors {

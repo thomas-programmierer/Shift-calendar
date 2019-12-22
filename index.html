@@ -32,11 +32,11 @@
         <a href="index.html" class="brand">Shifts Calendar <i class="far fa-calendar-alt"></i></a>
         <ul>
           <li>
-            <div id="log" title="See log">
+            <div id="log" title="See log (Shfit + C)">
               <i class="far fa-file-alt"></i>
               <div title="log" id="log-window">
                 <div class="head">
-                  Log
+                  Latest changes
                 </div>
                 <div title="last logs" class="body">
                 </div>
@@ -44,7 +44,7 @@
             </div>
           </li>
           <li>
-            <div title="add an item" id="add"><i class="fas fa-plus"></i></div>
+            <div title="Add an item (Ctrl + A)" id="add"><i class="fas fa-plus"></i></div>
           </li>
           <li>
             <div title="Remove all items" id="removeShifts"><i class="far fa-trash-alt"></i></div>
@@ -226,8 +226,14 @@
           </div>
         </div>
 
+        <!-- Close checkbox -->
+        <div class="close-on-save-container">
+          <input type="checkbox" name="close-on-save" id="close-on-save" checked>
+          <label for="close-on-save">Close on save</label>
+        </div>
+
         <!-- Add and remove buttons -->
-        <button class="btn btn-secondary" id="add-item">Save <i class="far fa-save"></i></button>
+        <button class="btn btn-primary" id="add-item">Save <i class="far fa-save"></i></button>
         <button class="btn-darker-white" id="cancel-add">Close/ Cancel <i class="fas fa-sign-out-alt"></i></button>
       </form>
     </div>
