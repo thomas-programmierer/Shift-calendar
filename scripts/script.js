@@ -606,5 +606,4 @@ window.addEventListener('keydown', (e) => {
   } else if (e.keyCode == 27) {
     hideAllOverlays();
   }
-  console.log(e.keyCode);
 });

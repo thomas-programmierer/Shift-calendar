@@ -11,5 +11,5 @@
     tutorial.style.display = 'none';
   });
 
-  if (localStorage.getItem('tutorial-seen')) tutorial.style.display = 'none';
+  if (!localStorage.getItem('tutorial-seen')) tutorial.style.display = "flex";
 })();
