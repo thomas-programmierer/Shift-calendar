@@ -378,6 +378,7 @@ nav ul li {
 #log-window .body {
   cursor: default;
   overflow-y: auto;
+  word-break: break-all;
   height: 25rem;
 }
 
@@ -513,6 +514,8 @@ td .shift .description:-webkit-scrollbar-thumb {
 td .shift .name {
   font-size: 1.5rem;
   margin-top: 2px;
+  max-width: 75%;
+  line-height: 100%;
 }
 
 td .shift .description {
@@ -568,6 +571,11 @@ table tbody td{
 /* add-menu */
 #add-menu {
   display: none;
+}
+
+#add-form{
+  max-height: 97vh;
+  overflow: auto;
 }
 
 .close-on-save-container {
